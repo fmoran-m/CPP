@@ -14,7 +14,7 @@ NAME = megaphone
 
 CC = c++
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 
