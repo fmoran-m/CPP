@@ -10,10 +10,12 @@ int Account::_totalNbWithdrawals = 0;
 
 void	Account::_displayTimestamp(void)
 {
-	time_t	now;
+	time_t	fromEpoch;
+	tm		*local;
 
-	now = time(NULL);
-	std::cout << std::put_time(localtime(&now), "[%Y%m%d_%H%M%S] ");
+	time(&fromEpoch);
+	local = localtime(&fromEpoch);
+	std::cout << std::put_time(local, "[%Y%m%d_%H%M%S] ");
 }
 
 Account::Account(int initial_deposit) : _amount(initial_deposit), _nbDeposits(0), _nbWithdrawals(0){
@@ -55,8 +57,6 @@ int	Account::getNbWithdrawals(void){
 
 void	Account::displayAccountsInfos(){
 
-	//Falta el tiempo
-
 	_displayTimestamp();
 	std::cout << "accounts:" << _nbAccounts << ";";
 	std::cout << "total:" << _totalAmount << ";";
@@ -65,8 +65,6 @@ void	Account::displayAccountsInfos(){
 }
 
 void	Account::makeDeposit(int deposit){
-
-	//Falta tiempo
 
 	_displayTimestamp();
 	_totalNbDeposits++;
@@ -82,8 +80,6 @@ void	Account::makeDeposit(int deposit){
 
 bool	Account::makeWithdrawal(int withdrawal){
 
-	//Falta tiempo
-	
 	_displayTimestamp();
 	std::cout << "index:" << _accountIndex << ";";
 	std::cout << "p_amount:" << _amount << ";";
@@ -108,8 +104,6 @@ int		Account::checkAmount(void) const {
 
 void	Account::displayStatus(void) const {
 
-	//Falta tiempo
-	
 	_displayTimestamp();
 	std::cout << "index:" << _accountIndex << ";";
 	std::cout << "amount:" << _amount << ";";
