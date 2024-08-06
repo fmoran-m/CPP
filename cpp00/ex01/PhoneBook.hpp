@@ -12,15 +12,15 @@ public:
 	~PhoneBook(void);
 
 	bool	add(void);
-	bool	search(void);
+	bool	search(void) const;
 	void	enterCommand(void);
 
 private:
 
 	Contact _contacts[8];
 	int		_it;
-	bool	_validateInputNumber(std::string input);
-	bool	_printTable(void);
+	bool	_validateInputNumber(std::string input) const;
+	bool	_printTable(void) const;
 };
 
 #endif

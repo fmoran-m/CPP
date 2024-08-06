@@ -8,8 +8,8 @@ PhoneBook::~PhoneBook(void){
 	return;
 }
 
-bool	PhoneBook::_validateInputNumber(std::string input)
-{
+bool	PhoneBook::_validateInputNumber(std::string input) const{
+
 	int	i = 0;
 	int	inNumber;
 
@@ -40,8 +40,8 @@ bool	PhoneBook::_validateInputNumber(std::string input)
 	return true;
 }
 
-bool	PhoneBook::_printTable(void)
-{
+bool	PhoneBook::_printTable(void) const {
+
 	int	i = 0;
 
 	if (_contacts[0].getName() == "")
@@ -177,7 +177,7 @@ bool PhoneBook::add(){
 	return true;
 }
 
-bool PhoneBook::search(){
+bool PhoneBook::search() const{
 
 	int	inNumber;
 	std::string	input;

@@ -8,27 +8,27 @@ Contact::~Contact(void){
 	return;
 }
 
-std::string	Contact::getName(){
+std::string	Contact::getName() const{
 
 	return (_name);
 }
 
-std::string	Contact::getLastName(){
+std::string	Contact::getLastName() const{
 
 	return (_lastName);
 }
 
-std::string	Contact::getNickname(){
+std::string	Contact::getNickname() const{
 
 	return (_nickname);
 }
 
-std::string	Contact::getPhoneNumber(){
+std::string	Contact::getPhoneNumber() const{
 
 	return (_phoneNumber);
 }
 
-std::string	Contact::getDarkestSecret(){
+std::string	Contact::getDarkestSecret() const{
 
 	return (_darkestSecret);
 }
