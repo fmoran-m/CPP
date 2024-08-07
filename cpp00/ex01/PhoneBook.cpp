@@ -1,6 +1,6 @@
 #include "PhoneBook.hpp"
 
-PhoneBook::PhoneBook(void) : _it(0){
+PhoneBook::PhoneBook(void) : _it(0), _loopFlag(0){
 	return;
 }
 
@@ -218,22 +218,22 @@ void PhoneBook::enterCommand(){
 
 	std::string input;
 
-	while(1)
+	while(!_loopFlag)
 	{
 		std::cout << "Insert command: ";
 		std::getline(std::cin, input);
 		if (std::cin.eof())
-			break;
-		if (input == "ADD"){
+			_loopFlag = 1;
+		else if (input == "ADD"){
 			if (add() == false)
-				break;
+			_loopFlag = 1;
 		}
 		else if (input == "SEARCH"){
 			if (search() == false)
-				break;
+			_loopFlag = 1;
 		}
 		else if (input == "EXIT")
-			break;
+			_loopFlag = 1;
 		else if (input == "")
 			continue;
 	}

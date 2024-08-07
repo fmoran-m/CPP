@@ -3,6 +3,7 @@
 #include "Contact.hpp"
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 class PhoneBook {
 
@@ -19,6 +20,7 @@ private:
 
 	Contact _contacts[8];
 	int		_it;
+    bool    _loopFlag;
 	bool	_validateInputNumber(std::string input) const;
 	bool	_printTable(void) const;
 };
