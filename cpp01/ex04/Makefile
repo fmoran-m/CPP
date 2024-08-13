@@ -6,9 +6,10 @@ CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 
-SRC = main.cpp
+SRC = main.cpp \
+		Replacetor.cpp
 
-INCLUDE = 
+INCLUDE = Replacetor.hpp
 
 OBJS = ${SRC:.cpp=.o}
 

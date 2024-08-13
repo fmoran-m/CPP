@@ -1,20 +1,27 @@
 #ifndef REPLACETOR_HPP
 # define REPLACETOR_HPP
 
+# include <string>
+# include <fstream>
+
 class Replacetor {
 public:
 
-	Replacetor(const &s1, const &s2, const &file);
+	Replacetor(const std::string &s1, std::string const &s2, std::string const &file);
 	~Replacetor();
 
-	void		replaceContent(std::string &buffer, const std::string &s1, const std::string &s2);
-	std::string getFileContent(std::ifstream &original);
-
+	void		replaceContent(std::string &buffer);
+	std::string getFileContent();
+	int			openOgFile(void);
+	int			createCpyFile(std::string &buffer);
+	
 private:
 
-	const std::string _s1;
-	const std::string _s2;
-	const std::string _file;
+	std::string	const	_s1;
+	std::string	const	_s2;
+	std::string	const	_file;
+	std::ifstream 		_original;
+	std::ofstream		_copy;
 
 };
 #endif
