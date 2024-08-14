@@ -1,7 +1,5 @@
 #include "Replacetor.hpp"
 #include <iostream>
-#include <string>
-#include <fstream>
 
 Replacetor::Replacetor(const std::string &s1,  const std::string &s2, const std::string &file) : _s1(s1), _s2(s2), _file(file){
 	return;
@@ -22,7 +20,7 @@ std::string Replacetor::getFileContent(){
 	return buffer;
 }
 
-void		Replacetor::replaceContent(std::string &buffer){
+void	Replacetor::replaceContent(std::string &buffer){
 
 	size_t pos = buffer.find(this->_s1);
 
@@ -46,7 +44,7 @@ int	Replacetor::openOgFile(){
 	return 1;
 }
 
-int			Replacetor::createCpyFile(std::string &buffer){
+int	Replacetor::createCpyFile(std::string &buffer){
 
 	this->_copy.open(this->_file + ".replace");
 	if (!this->_copy.is_open())
