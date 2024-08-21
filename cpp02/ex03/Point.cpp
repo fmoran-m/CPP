@@ -10,12 +10,12 @@ Point::Point(Fixed const x, Fixed const y) : x(x), y(y){
 	return;
 }
 
-Point::Point(const Point & src) : x(src.x), y(src.y){
+Point::Point(const Point & src) : x(src.x), y(src.y){ //Cant initialize with *this = src because of const
 	//std::cout << "Copy constructor called" << std::endl;
 	return;
 }
 
-Point& Point::operator=(const Fixed &rhs){
+Point& Point::operator=(const Fixed &rhs){ //Cant reassign const values
 	//std::cout << "Copy asignment operator called" << std::endl;
 	(void)rhs;
 	return (*this);
