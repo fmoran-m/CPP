@@ -2,14 +2,14 @@ NAME = fixed
 
 CC = c++
 
-CFLAGS = -fsanitize=address -std=c++98 -Wall -Wextra -Werror
+CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 
 SRC = main.cpp \
-	  bsp.cpp \
 	  Fixed.cpp \
-	  Point.cpp
+	  Point.cpp \
+	  bsp.cpp
 
 INCLUDE = Fixed.hpp
 
@@ -20,7 +20,7 @@ $(NAME): $(OBJS) $(INCLUDE)
 
 all: $(NAME)
 
-%.o:%.c
+%.o:%.cpp
 		$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

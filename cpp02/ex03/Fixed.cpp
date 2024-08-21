@@ -55,7 +55,7 @@ void	Fixed::setRawBits(int const raw){
 	this->_n = raw;
 }
 
-int	Fixed::getPointExp(void){
+int	Fixed::getPointExp(void) const{
 
 	int exp = 1;
 
@@ -93,29 +93,28 @@ Fixed& Fixed::operator=(const Fixed & rhs){
 	return *this;
 }
 
-bool Fixed::operator>(const Fixed &rhs){
+bool Fixed::operator>(const Fixed &rhs) const{
 
 	if (this->_n <= rhs.getRawBits())
 		return false;
 	return true;
 }
 
-bool Fixed::operator<(const Fixed &rhs){
+bool Fixed::operator<(const Fixed &rhs) const{
 
 	if (this->_n >= rhs.getRawBits())
 		return false;
 	return true;
 }
 
-bool Fixed::operator>=(const Fixed &rhs){
+bool Fixed::operator>=(const Fixed &rhs) const{
 
 	if (this->_n < rhs.getRawBits())
 		return false;
 	return true;
-
 }
 
-bool Fixed::operator<=(const Fixed &rhs){
+bool Fixed::operator<=(const Fixed &rhs) const{
 
 	if (this->_n > rhs.getRawBits())
 		return false;
@@ -123,40 +122,40 @@ bool Fixed::operator<=(const Fixed &rhs){
 
 }
 
-bool Fixed::operator==(const Fixed &rhs){
+bool Fixed::operator==(const Fixed &rhs) const{
 
 	if (this->_n != rhs.getRawBits())
 		return false;
 	return true;
 }
 
-bool Fixed::operator!=(const Fixed &rhs){
+bool Fixed::operator!=(const Fixed &rhs) const{
 
 	if (this->_n == rhs.getRawBits())
 		return false;
 	return true;
 }
 
-Fixed Fixed::operator+(const Fixed &rhs){
+Fixed Fixed::operator+(const Fixed &rhs) const{
 
 	Fixed	result;
 	result.setRawBits(this->_n + rhs.getRawBits());
 	return (result);
 }
 
-Fixed Fixed::operator-(const Fixed &rhs){
+Fixed Fixed::operator-(const Fixed &rhs) const{
 	Fixed	result;
 	result.setRawBits(this->_n - rhs.getRawBits());
 	return (result);
 }
 
-Fixed Fixed::operator*(const Fixed &rhs){
+Fixed Fixed::operator*(const Fixed &rhs) const{
 	Fixed	result;
 	result.setRawBits((this->_n * rhs.getRawBits()) / this->getPointExp());
 	return (result);
 }
 
-Fixed Fixed::operator/(const Fixed &rhs){
+Fixed Fixed::operator/(const Fixed &rhs) const{
 	Fixed	result;
 	result.setRawBits((this->_n / rhs.getRawBits()) * this->getPointExp());
 	return (result);

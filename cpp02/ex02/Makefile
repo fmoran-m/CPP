@@ -18,7 +18,7 @@ $(NAME): $(OBJS) $(INCLUDE)
 
 all: $(NAME)
 
-%.o:%.c
+%.o:%.cpp
 		$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

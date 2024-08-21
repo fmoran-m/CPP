@@ -11,21 +11,21 @@ public:
 	~Fixed();
 
 	Fixed &operator=(const Fixed &rhs);
-	Fixed operator+(const Fixed &rhs);
-	Fixed operator-(const Fixed &rhs);
-	Fixed operator*(const Fixed &rhs);
-	Fixed operator/(const Fixed &rhs);
+	Fixed operator+(const Fixed &rhs) const;
+	Fixed operator-(const Fixed &rhs) const;
+	Fixed operator*(const Fixed &rhs) const;
+	Fixed operator/(const Fixed &rhs) const;
 	Fixed &operator++(void);
 	Fixed &operator--(void);
 	Fixed operator++(int);
 	Fixed operator--(int);
 
-	bool operator>(const Fixed &rhs);
-	bool operator<(const Fixed &rhs);
-	bool operator>=(const Fixed &rhs);
-	bool operator<=(const Fixed &rhs);
-	bool operator==(const Fixed &rhs);
-	bool operator!=(const Fixed &rhs);
+	bool operator>(const Fixed &rhs) const;
+	bool operator<(const Fixed &rhs) const;
+	bool operator>=(const Fixed &rhs) const;
+	bool operator<=(const Fixed &rhs) const;
+	bool operator==(const Fixed &rhs) const;
+	bool operator!=(const Fixed &rhs) const;
 
 	static Fixed 	&min(Fixed &lhs, Fixed &rhs);
 	static Fixed	&max(Fixed &lhs, Fixed &rhs);
@@ -34,7 +34,7 @@ public:
 
 	int		getRawBits(void) const;
 	int		getPoint(void) const;
-	int		getPointExp(void);
+	int		getPointExp(void) const;
 	void	setRawBits(int const raw);
 	float	toFloat(void) const;
 	int		toInt(void) const;

@@ -8,18 +8,24 @@ Point::Point(Fixed const x, Fixed const y) : x(x), y(y){
 	return;
 }
 
-Point::Point(const Point & src){
-
+Point::Point(const Point & src) : x(src.x), y(src.y){
 	//std::cout << "Copy constructor called" << std::endl;
-	*this = src;
 	return;
 }
 
-Point& Point::operator=(const Point & rhs){
-
-	return *this;
+Point& Point::operator=(const Fixed &rhs){
+	(void)rhs;
+	return (*this);
 }
 
 Point::~Point(void){
 	return;
+}
+
+Fixed const	&Point::getX(void) const{
+	return this->x;
+}
+
+Fixed const	&Point::getY(void) const{
+	return this->y;
 }
