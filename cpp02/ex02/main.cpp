@@ -19,17 +19,17 @@ int main(void){
 	std::cout << a / b << std::endl; //2
 	
 	if (a > b)
-		std::cout << "> Correcto" << std::endl; 
+		std::cout << "> Correct" << std::endl; 
 	if (b < a)
-		std::cout << "< Correcto" << std::endl; 
+		std::cout << "< Correct" << std::endl; 
 	if ((a > b) && (c == d))
-		std::cout << ">= Correcto" << std::endl; 
+		std::cout << ">= Correct" << std::endl; 
 	if ((b < a) && (c == d))
-		std::cout << "<= Correcto" << std::endl; 
+		std::cout << "<= Correct" << std::endl; 
 	if (a != b)
-		std::cout << "!= Correcto" << std::endl; 
+		std::cout << "!= Correct" << std::endl; 
 	if (c == d)
-		std::cout << "== Correcto" << std::endl; 
+		std::cout << "== Correct" << std::endl; 
 	
 	std::cout << Fixed::max(a, b) << std::endl;
 	std::cout << Fixed::min(a, b) << std::endl;

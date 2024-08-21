@@ -5,10 +5,10 @@ bool bsp(Point const a, Point const b, Point const c, Point const point);
 
 int main(void){
 	
-	Point	a(3, 3);
-	Point	b(6, 8);
-	Point	c(8, 2);
-	Point	point(4, 4);
+	Point	a(-4.44f, -3.29f);
+	Point	b(6.74f, -3.95f);
+	Point	c(-3.82f, 5.92f);
+	Point	point(1.52f, 1.55f);
 
 	bool isInside = bsp(a, b, c, point);
 	if (isInside == true)

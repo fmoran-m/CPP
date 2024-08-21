@@ -4,7 +4,7 @@
 class Fixed {
 public:
 	Fixed(void);
-	Fixed(const Fixed &);
+	Fixed(const Fixed & src);
 	Fixed &operator=(const Fixed & rhs);
 	~Fixed();
 
