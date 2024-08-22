@@ -1,12 +1,14 @@
 #include "ClapTrap.hpp"
 #include <iostream>
-#include <climits>
 
 int main(void){
 
 	ClapTrap	android("ANDROID");
 
 	std::cout << "Energy Points: " << android.getEnergyPoints() << std::endl;
+	std::cout << "Hit Points: " << android.getHitPoints() << std::endl;
+	std::cout << "Attack Points: " << android.getAttackDamage() << std::endl;
+
 	android.attack("monster");
 	std::cout << "Energy Points: " << android.getEnergyPoints() << std::endl;
 

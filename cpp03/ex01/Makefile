@@ -2,14 +2,16 @@ NAME = claptrap
 
 CC = c++
 
-CFLAGS = -std=c++98 -Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 
 SRC = main.cpp \
-	  ClapTrap.cpp
+	  ClapTrap.cpp \
+	  ScavTrap.cpp
 
 INCLUDE = ClapTrap.hpp \
+			ScavTrap.hpp
 
 OBJS = ${SRC:.cpp=.o}
 

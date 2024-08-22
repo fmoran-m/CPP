@@ -51,7 +51,7 @@ void	ClapTrap::attack(const std::string &target){
 
 	if (_energyPoints < 1)
 	{
-		std::cout << "Not enough energy points" << std::endl;
+		std::cout << this->_name << ": Not enough energy points" << std::endl;
 		return;
 	}
 
@@ -68,7 +68,7 @@ void	ClapTrap::beRepaired(unsigned int amount){
 	long long int longAmount = amount;
 	if (_energyPoints < 1)
 	{
-		std::cout << "Not enough energy points" << std::endl;
+		std::cout << this->_name << ": Not enough energy points" << std::endl;
 		return;
 	}
 	if (longAmount > UINT_MAX || (longAmount + this->_hitPoints) > UINT_MAX)
