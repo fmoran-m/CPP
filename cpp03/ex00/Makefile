@@ -1,4 +1,4 @@
-NAME = bsp 
+NAME = claptrap
 
 CC = c++
 
@@ -7,11 +7,9 @@ CFLAGS = -std=c++98 -Wall -Wextra -Werror
 RM = rm -f
 
 SRC = main.cpp \
-	  Fixed.cpp \
-	  Point.cpp \
-	  bsp.cpp
+	  ClapTrap.cpp
 
-INCLUDE = Fixed.hpp
+INCLUDE = ClapTrap.hpp
 
 OBJS = ${SRC:.cpp=.o}
 
