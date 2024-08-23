@@ -4,6 +4,7 @@
 int main(void){
 
 	ClapTrap	android("ANDROID");
+	ClapTrap	cpy(android);
 
 	std::cout << "Energy Points: " << android.getEnergyPoints() << std::endl;
 	std::cout << "Hit Points: " << android.getHitPoints() << std::endl;

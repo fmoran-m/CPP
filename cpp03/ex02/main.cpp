@@ -1,10 +1,12 @@
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 #include <iostream>
 
 int main(void)
 {
+	/* CLAPTRAP */
 	//Base Class
-	
+
 	ClapTrap	android("Clap");
 	ClapTrap	cpy(android);
 
@@ -28,10 +30,11 @@ int main(void)
 	android.beRepaired(24);
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
 
+	/* SCAVTRAP */
 	//Inherited Class
 
 	ScavTrap scav("scav");
-	ScavTrap scavCpy("ScavCpy");
+	ScavTrap scavCpy(scav);
 
 	std::cout << "Scav Energy Points: " << scav.getEnergyPoints() << std::endl;
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
@@ -49,6 +52,27 @@ int main(void)
 	scav.takeDamage(10);
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
 
+	/* FlagTrap */
+	//Inherited Class
+	
+	FragTrap frag("frag");
+	FragTrap fragCpy(fragCpy);
+
+	std::cout << "frag Energy Points: " << frag.getEnergyPoints() << std::endl;
+	std::cout << "frag Hit Points: " << frag.getHitPoints() << std::endl;
+	std::cout << "frag Attack Points: " << frag.getAttackDamage() << std::endl;
+	frag.attack("monster");
+
+	frag.highFivesGuys();
+
+	//Inherited class with base prints
+
+	frag.beRepaired(20);
+	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
+	frag.takeDamage(7);
+	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
+	frag.takeDamage(12);
+	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
 
 	return 0;
 }

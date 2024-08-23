@@ -1,4 +1,4 @@
-NAME = claptrap
+NAME = diamondtrap 
 
 CC = c++
 
@@ -7,9 +7,15 @@ CFLAGS = -std=c++98 -Wall -Wextra -Werror
 RM = rm -f
 
 SRC = main.cpp \
-	  ClapTrap.cpp
+	  ClapTrap.cpp \
+	  ScavTrap.cpp \
+	  FragTrap.cpp \
+	  DiamondTrap.cpp
 
-INCLUDE = ClapTrap.hpp
+INCLUDE = ClapTrap.hpp \
+			FragTrap.hpp \
+			ScavTrap.hpp \
+			DiamondTrap.hpp
 
 OBJS = ${SRC:.cpp=.o}
 

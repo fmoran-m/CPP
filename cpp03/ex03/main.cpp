@@ -1,10 +1,14 @@
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 #include <iostream>
 
 int main(void)
 {
+	/* CLAPTRAP */
+
 	//Base Class
-	
+	/*
 	ClapTrap	android("Clap");
 	ClapTrap	cpy(android);
 
@@ -27,11 +31,12 @@ int main(void)
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
 	android.beRepaired(24);
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
-
+*/
+	/* SCAVTRAP */
 	//Inherited Class
-
+/*
 	ScavTrap scav("scav");
-	ScavTrap scavCpy("ScavCpy");
+	ScavTrap scavCpy(scav);
 
 	std::cout << "Scav Energy Points: " << scav.getEnergyPoints() << std::endl;
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
@@ -48,7 +53,46 @@ int main(void)
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
 	scav.takeDamage(10);
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
+*/
+	/* FlagTrap */
+	//Inherited Class
+/*	
+	FragTrap frag("frag");
+	FragTrap fragCpy(fragCpy);
 
+	std::cout << "frag Energy Points: " << frag.getEnergyPoints() << std::endl;
+	std::cout << "frag Hit Points: " << frag.getHitPoints() << std::endl;
+	std::cout << "frag Attack Points: " << frag.getAttackDamage() << std::endl;
+	frag.attack("monster");
+
+	frag.highFivesGuys();
+
+	//Inherited class with base prints
+
+	frag.beRepaired(20);
+	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
+	frag.takeDamage(7);
+	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
+	frag.takeDamage(12);
+	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
+*/
+
+	DiamondTrap diamond("diamond");
+	DiamondTrap	diamondCpy("diamondCpy");
+
+	std::cout << "diamond Energy Points: " << diamond.getEnergyPoints() << std::endl;
+	std::cout << "diamond Hit Points: " << diamond.getHitPoints() << std::endl;
+	std::cout << "diamond Attack Points: " << diamond.getAttackDamage() << std::endl;
+
+	diamond.attack("monster");
+	diamond.whoAmI();
+
+	diamond.beRepaired(20);
+	std::cout << "flag Hit Points: " << diamond.getHitPoints() << std::endl;
+	diamond.takeDamage(7);
+	std::cout << "flag Hit Points: " << diamond.getHitPoints() << std::endl;
+	diamond.takeDamage(12);
+	std::cout << "flag Hit Points: " << diamond.getHitPoints() << std::endl;
 
 	return 0;
 }

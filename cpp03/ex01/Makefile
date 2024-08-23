@@ -1,8 +1,8 @@
-NAME = claptrap
+NAME = scavtrap
 
 CC = c++
 
-CFLAGS = -fsanitize=address -std=c++98 -Wall -Wextra -Werror
+CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 
