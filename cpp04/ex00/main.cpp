@@ -12,5 +12,9 @@ int main(void){
 
 	cat->makeSound();
 	dog->makeSound();
+
+	delete cat;
+	delete dog;
+
 	return 0;
 }
