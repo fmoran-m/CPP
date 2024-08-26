@@ -7,13 +7,15 @@ CFLAGS = -std=c++98 -Wall -Wextra -Werror
 RM = rm -f
 
 SRC = main.cpp \
-		Animal.cpp \
+		AAnimal.cpp \
 		Cat.cpp \
-		Dog.cpp
+		Dog.cpp \
+		Brain.cpp
 
-INCLUDE = Animal.hpp \
+INCLUDE = AAnimal.hpp \
 			Cat.hpp \
-			Dog.hpp
+			Dog.hpp \
+			Brain.hpp
 
 
 OBJS = ${SRC:.cpp=.o}
