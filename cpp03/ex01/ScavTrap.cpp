@@ -31,7 +31,7 @@ ScavTrap::ScavTrap(const ScavTrap &src) : ClapTrap(src._name){
 }
 ScavTrap &ScavTrap::operator=(const ScavTrap &cpy){
 
-	//std::cout << "ScavTrap assign operator called" << std::endl;
+	std::cout << "ScavTrap assign operator called" << std::endl;
 
 	this->_hitPoints = cpy._hitPoints;
 	this->_energyPoints = cpy._energyPoints;

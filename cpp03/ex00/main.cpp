@@ -27,6 +27,12 @@ int main(void){
 
 	android.beRepaired(24);
 	std::cout << "Hit Points: " << android.getHitPoints() << std::endl;
+	for (int i = 0; i < 7; i++)
+	{
+		android.attack("monster");
+		std::cout << "Energy Points: " << android.getEnergyPoints() << std::endl;
+	}
+
 
 	return 0;
 }

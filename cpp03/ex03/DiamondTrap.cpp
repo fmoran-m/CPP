@@ -25,7 +25,7 @@ DiamondTrap::DiamondTrap(const std::string &name) : ClapTrap(name + "_clap_name"
 	return;
 }
 
-DiamondTrap::DiamondTrap(const DiamondTrap &src) : ClapTrap(src._name), ScavTrap(src), FragTrap(src){
+DiamondTrap::DiamondTrap(const DiamondTrap &src) : ClapTrap(src._name + "_clap_name"), ScavTrap(src), FragTrap(src){
 
 	std::cout << "DiamondTrap copy constructor called" << std::endl;
 
@@ -35,8 +35,9 @@ DiamondTrap::DiamondTrap(const DiamondTrap &src) : ClapTrap(src._name), ScavTrap
 
 DiamondTrap &DiamondTrap::operator=(const DiamondTrap &cpy){
 
-	//std::cout << "DiamondTrap assign operator called" << std::endl;
+	std::cout << "DiamondTrap assign operator called" << std::endl;
 
+	this->_name = cpy._name;
 	this->_hitPoints = cpy._hitPoints;
 	this->_energyPoints = cpy._energyPoints;
 	this->_attackDamage = cpy._attackDamage;
@@ -54,5 +55,5 @@ void DiamondTrap::attack(std::string const &target){
 	return;
 }
 void DiamondTrap::whoAmI(){
-	std::cout << "Am I a DiamondTrap named " << this->_name << ", an horrendous mix of different androids, or just dust accross the galaxy?" << std::endl;
+	std::cout << "Am I a DiamondTrap named " << this->_name << ", a Claptrap named " << ClapTrap::_name << ", an horrendous mix of different androids, or just dust accross the galaxy?" << std::endl;
 }

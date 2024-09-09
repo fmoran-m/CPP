@@ -15,7 +15,7 @@ ClapTrap::ClapTrap(const std::string &name) : _name(name), _hitPoints(10), _ener
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &cpy){
-	//std::cout << "ClapTrap assign operator called" << std::endl;
+	std::cout << "ClapTrap assign operator called" << std::endl;
 	this->_hitPoints = cpy._hitPoints;
 	this->_energyPoints = cpy._energyPoints;
 	this->_attackDamage = cpy._attackDamage;

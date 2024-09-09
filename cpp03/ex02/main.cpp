@@ -20,14 +20,10 @@ int main(void)
 	
 	android.beRepaired(5);
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
+	std::cout << "Clap Energy Points: " <<android.getEnergyPoints() << std::endl;
 	android.takeDamage(10);
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
 	android.takeDamage(10);
-	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
-
-	android.beRepaired(50);
-	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
-	android.beRepaired(24);
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
 
 	/* SCAVTRAP */
@@ -40,6 +36,7 @@ int main(void)
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
 	std::cout << "Scav Attack Points: " << scav.getAttackDamage() << std::endl;
 	scav.attack("monster");
+	std::cout << "Scav Energy Points: " << scav.getEnergyPoints() << std::endl;
 
 	scav.guardGate();
 
@@ -47,9 +44,10 @@ int main(void)
 
 	scav.beRepaired(5);
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
+	std::cout << "Scav Energy Points: " << scav.getEnergyPoints() << std::endl;
 	scav.takeDamage(10);
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
-	scav.takeDamage(10);
+	scav.takeDamage(100);
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
 
 	/* FlagTrap */
@@ -62,6 +60,7 @@ int main(void)
 	std::cout << "frag Hit Points: " << frag.getHitPoints() << std::endl;
 	std::cout << "frag Attack Points: " << frag.getAttackDamage() << std::endl;
 	frag.attack("monster");
+	std::cout << "frag Energy Points: " << frag.getEnergyPoints() << std::endl;
 
 	frag.highFivesGuys();
 
@@ -69,9 +68,10 @@ int main(void)
 
 	frag.beRepaired(20);
 	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
+	std::cout << "frag Energy Points: " << frag.getEnergyPoints() << std::endl;
 	frag.takeDamage(7);
 	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
-	frag.takeDamage(12);
+	frag.takeDamage(100);
 	std::cout << "flag Hit Points: " << frag.getHitPoints() << std::endl;
 
 	return 0;

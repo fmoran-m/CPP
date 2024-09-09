@@ -31,7 +31,7 @@ FragTrap::FragTrap(const FragTrap &src) : ClapTrap(src._name){
 }
 FragTrap &FragTrap::operator=(const FragTrap &cpy){
 
-	//std::cout << "FragTrap assign operator called" << std::endl;
+	std::cout << "FragTrap assign operator called" << std::endl;
 
 	this->_hitPoints = cpy._hitPoints;
 	this->_energyPoints = cpy._energyPoints;
