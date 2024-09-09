@@ -12,9 +12,10 @@ public:
 
 	virtual void makeSound();
 
+	virtual std::string getType(void) const;
+
 protected:
 	std::string type;
-
 };
 
 #endif

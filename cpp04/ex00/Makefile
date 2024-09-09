@@ -2,18 +2,22 @@ NAME = poly
 
 CC = c++
 
-CFLAGS = -std=c++98 -Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 
 SRC = main.cpp \
 		Animal.cpp \
 		Cat.cpp \
-		Dog.cpp
+		Dog.cpp \
+		WrongCat.cpp \
+		WrongAnimal.cpp
 
 INCLUDE = Animal.hpp \
 			Cat.hpp \
-			Dog.hpp
+			Dog.hpp \
+			WrongCat.hpp \
+			WrongAnimal.hpp
 
 
 OBJS = ${SRC:.cpp=.o}

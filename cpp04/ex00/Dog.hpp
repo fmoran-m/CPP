@@ -7,16 +7,16 @@ class Dog : public Animal{
 
 public:
 	Dog();
-	Dog(std::string type);
 	Dog(const Dog &src);
 	Dog &operator=(const Dog &rhs);
 	~Dog();
 
-	virtual void makeSound();
+	void makeSound();
+
+	std::string getType(void) const;
 
 protected:
 	std::string type;
-
 };
 
 #endif
