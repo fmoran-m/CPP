@@ -51,7 +51,7 @@ void ScavTrap::attack(std::string const &target){
 		std::cout << "Cannot attack: ScavTrap " << this->_name << " is dead" << std::endl;
 		return;
 	}
-	if (_energyPoints == 1)
+	if (_energyPoints == 0)
 	{
 		std::cout << "Cannot attack: ScavTrap " << this->_name << ": Not enough energy points" << std::endl;
 		return;
