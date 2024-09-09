@@ -50,10 +50,14 @@ DiamondTrap::~DiamondTrap(void){
 }
 
 void DiamondTrap::attack(std::string const &target){
-
 	ScavTrap::attack(target);
 	return;
 }
 void DiamondTrap::whoAmI(){
+	if (this->_hitPoints == 0)
+	{
+		std::cout << "Cannot repair: DiamondTrap " << this->_name << " is dead" << std::endl;
+		return;
+	}
 	std::cout << "Am I a DiamondTrap named " << this->_name << ", a Claptrap named " << ClapTrap::_name << ", an horrendous mix of different androids, or just dust accross the galaxy?" << std::endl;
 }

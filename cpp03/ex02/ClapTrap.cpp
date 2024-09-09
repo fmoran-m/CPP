@@ -50,12 +50,16 @@ unsigned int	ClapTrap::getAttackDamage(void){
 
 void	ClapTrap::attack(const std::string &target){
 
-	if (_energyPoints < 1)
+	if (this->_hitPoints == 0)
 	{
-		std::cout << this->_name << ": Not enough energy points" << std::endl;
+		std::cout << "Cannot repair: ClapTrap " << this->_name << " is dead" << std::endl;
 		return;
 	}
-
+	if (_energyPoints == 0)
+	{
+		std::cout << "Cannot repair ClapTrap " << this->_name << ": Not enough energy points" << std::endl;
+		return;
+	}
 	std::cout << "ClapTrap " << this->_name << " attacks " << target << ", "
 	<< "causing " << this->_attackDamage << " points of damage!" << std::endl;
 
@@ -67,9 +71,15 @@ void	ClapTrap::attack(const std::string &target){
 void	ClapTrap::beRepaired(unsigned int amount){
 
 	long long int longAmount = amount;
-	if (_energyPoints < 1)
+
+	if (this->_hitPoints == 0)
 	{
-		std::cout << this->_name << ": Not enough energy points" << std::endl;
+		std::cout << "Cannot repair: Claptrap " << this->_name << " is dead" << std::endl;
+		return;
+	}
+	if (_energyPoints == 0)
+	{
+		std::cout << "Cannot repair Claptrap " << this->_name << ": Not enough energy points" << std::endl;
 		return;
 	}
 	if (longAmount > UINT_MAX || (longAmount + this->_hitPoints) > UINT_MAX)
@@ -87,7 +97,7 @@ void	ClapTrap::takeDamage(unsigned int amount)
 
 	if (amount >= this->_hitPoints)
 	{
-		std::cout << "Claptrap is dead." << std::endl;
+		std::cout << "Claptrap " << this->_name << " is dead" << std::endl;
 		this->_hitPoints = 0;
 		return ;
 	}
@@ -96,3 +106,4 @@ void	ClapTrap::takeDamage(unsigned int amount)
 
 	return;
 }
+

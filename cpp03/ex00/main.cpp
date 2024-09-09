@@ -19,9 +19,6 @@ int main(void){
 	android.takeDamage(10);
 	std::cout << "Hit Points: " << android.getHitPoints() << std::endl;
 
-	android.takeDamage(10);
-	std::cout << "Hit Points: " << android.getHitPoints() << std::endl;
-	
 	android.beRepaired(50);
 	std::cout << "Hit Points: " << android.getHitPoints() << std::endl;
 
@@ -32,7 +29,8 @@ int main(void){
 		android.attack("monster");
 		std::cout << "Energy Points: " << android.getEnergyPoints() << std::endl;
 	}
-
-
+	android.takeDamage(80);
+	std::cout << "Hit Points: " << android.getHitPoints() << std::endl;
+	android.beRepaired(24);
 	return 0;
 }

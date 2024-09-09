@@ -8,7 +8,7 @@ int main(void)
 	ClapTrap	android("Clap");
 	ClapTrap	cpy(android);
 
-	std::cout << "Clap Energy Points: " <<android.getEnergyPoints() << std::endl;
+	std::cout << "Clap Energy Points: " << android.getEnergyPoints() << std::endl;
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
 	std::cout << "Clap Attack Points: " << android.getAttackDamage() << std::endl;
 
@@ -22,6 +22,7 @@ int main(void)
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
 	android.takeDamage(10);
 	std::cout << "Clap Hit Points: " << android.getHitPoints() << std::endl;
+	android.beRepaired(5);
 
 	//Inherited Class
 
@@ -45,7 +46,8 @@ int main(void)
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
 	scav.takeDamage(100);
 	std::cout << "Scav Hit Points: " << scav.getHitPoints() << std::endl;
-
+	scav.beRepaired(5);
+	scav.attack("monster");
 
 	return 0;
 }
