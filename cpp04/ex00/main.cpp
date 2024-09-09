@@ -7,6 +7,15 @@
 
 int main(void){
 
+/*
+	Animal stackAnimal;
+	Dog stackDog;
+	Cat stackCat;
+
+	Animal cpyStackAnimal(stackAnimal);
+	Dog cpyStackDog(stackDog);
+	Cat cpyStackCat(stackCat);
+*/
 	Animal *animal = new Animal(); //Class Animal
 	Animal *cat = new Cat(); //An animal that, in this case, is a cat, but it could be something else
 	Animal *dog = new Dog(); //Same with a Dog
@@ -31,6 +40,5 @@ int main(void){
 	delete dog;
 	delete animal;
 	delete wrongcat;
-
 	return 0;
 }
