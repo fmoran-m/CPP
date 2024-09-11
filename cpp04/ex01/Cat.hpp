@@ -13,10 +13,13 @@ public:
 	Cat &operator=(const Cat &rhs);
 	~Cat();
 
-	virtual void makeSound();
+	void makeSound();
+
+	Brain *getBrain() const;
 
 protected:
 	std::string type;
+private:
 	Brain *brain;
 };
 

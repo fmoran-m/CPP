@@ -1,8 +1,8 @@
-NAME = poly
+NAME = fire
 
 CC = c++
 
-CFLAGS = -std=c++98 -Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 
@@ -10,13 +10,17 @@ SRC = main.cpp \
 		Animal.cpp \
 		Cat.cpp \
 		Dog.cpp \
-		Brain.cpp
+		Brain.cpp \
+		WrongAnimal.cpp \
+		WrongCat.cpp
+
 
 INCLUDE = Animal.hpp \
 			Cat.hpp \
 			Dog.hpp \
-			Brain.hpp
-
+			Brain.hpp \
+			WrongAnimal.hpp \
+			WrongCat.hpp \
 
 OBJS = ${SRC:.cpp=.o}
 
