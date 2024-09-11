@@ -1,3 +1,4 @@
+#include "Brain.hpp"
 #include "AAnimal.hpp"
 #include <iostream>
 
@@ -26,4 +27,8 @@ AAnimal &AAnimal::operator=(const AAnimal &rhs){
 void	AAnimal::makeSound(){
 	std::cout << "An AAnimal class does not make sounds" << std::endl;
 	return;
+}
+
+Brain	*AAnimal::getBrain() const{
+	return NULL;
 }

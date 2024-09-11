@@ -1,4 +1,4 @@
-NAME = poly
+NAME = fire
 
 CC = c++
 
@@ -10,13 +10,17 @@ SRC = main.cpp \
 		AAnimal.cpp \
 		Cat.cpp \
 		Dog.cpp \
-		Brain.cpp
+		Brain.cpp \
+		WrongAnimal.cpp \
+		WrongCat.cpp
+
 
 INCLUDE = AAnimal.hpp \
 			Cat.hpp \
 			Dog.hpp \
-			Brain.hpp
-
+			Brain.hpp \
+			WrongAnimal.hpp \
+			WrongCat.hpp \
 
 OBJS = ${SRC:.cpp=.o}
 

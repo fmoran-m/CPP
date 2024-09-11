@@ -13,10 +13,12 @@ public:
 	Dog &operator=(const Dog &rhs);
 	~Dog();
 
-	virtual void makeSound();
+	void makeSound();
 
+	Brain *getBrain() const;
 protected:
 	std::string type;
+private:
 	Brain *brain;
 };
 

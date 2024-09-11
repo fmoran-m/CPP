@@ -8,8 +8,10 @@ public:
 	Brain();
 	Brain(const Brain &src);
 	Brain &operator=(const Brain &rhs);
-	virtual ~Brain();
+	~Brain();
 
+	std::string	getIdea(int index) const;
+	void		setIdea(int index, std::string newIdea);
 private:
 	std::string ideas[100];
 };
