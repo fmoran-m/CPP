@@ -2,6 +2,8 @@
 # define CURE_HPP
 # include <string>
 # include "AMateria.hpp"
+# include "ICharacter.hpp"
+# include "ICharacter.hpp"
 
 class Cure : public AMateria {
 
@@ -12,8 +14,9 @@ public:
 	Cure &operator=(const Cure &rhs);
 	~Cure();
 
-	Cure* clone() const;
-	std::string const & getType(void) const;
+	Cure*				clone() const;
+	std::string const	&getType(void) const;
+	void				use(std::string const &name) const;
 
 protected:
 	std::string const type;

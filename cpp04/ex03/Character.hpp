@@ -7,7 +7,7 @@
 class Character : public ICharacter{
 public:
 	Character();
-	Character(std::string const & name);
+	Character(std::string name);
 	Character(const Character &src);
 	Character &operator=(const Character &rhs);
 	~Character();
@@ -18,7 +18,6 @@ public:
 	void use(int idx, ICharacter& target);
 	AMateria *inventory[4];
 private:
-	std::string const & name;
-	static const std::string defaultName;
+	std::string name;
 };
 #endif

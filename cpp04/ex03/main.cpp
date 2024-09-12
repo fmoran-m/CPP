@@ -7,15 +7,22 @@
 int main(void){
 
 	AMateria *ice1 = new Ice();
+	AMateria *ice2 = new Ice();
+	AMateria *cure1 = new Cure();
+	AMateria *cure2 = new Cure();
 
-	std::cout << "Ice type: " << ice1->getType() << std::endl;
-
-	std::string pepeName = "Pepe";
-	ICharacter *pepe = new Character(pepeName);
-	ICharacter *pepeCpy = new Character(*pepe);
+	ICharacter *pepe = new Character("pepe");
+	ICharacter *betis = new Character("betis");
 	pepe->equip(ice1);
-	pepe->use(0, *enemy);
-	delete pepe;
-	delete enemy;
+	pepe->equip(ice2);
+	pepe->equip(cure1);
+	pepe->equip(cure2);
+	pepe->use(0, *betis);
+	pepe->use(1, *betis);
+	pepe->use(2, *betis);
+	pepe->use(3, *betis);
+	*betis = *pepe;
+	delete(betis);
+	delete(pepe);
 	return 0; 
 }

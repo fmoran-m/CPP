@@ -2,7 +2,7 @@ NAME = recap
 
 CC = c++
 
-CFLAGS = -fsanitize=address -g3 -pedantic -std=c++98 -Wall -Wextra #-Werror
+CFLAGS = -fsanitize=address -g3 -pedantic -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 

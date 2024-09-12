@@ -2,29 +2,28 @@
 #include <iostream>
 
 Cure::Cure() : AMateria("cure"){
-	std::cout << "Cure default constructor called" << std::endl;
+//	std::cout << "Cure default constructor called" << std::endl;
 	return;
 }
 
 Cure::Cure(std::string const &type) : AMateria(type){
-	std::cout << "Cure type constructor called" << std::endl;
+//	std::cout << "Cure type constructor called" << std::endl;
 	return;
 }
 
-Cure::Cure(const Cure &src) : AMateria("cure"){
-	*this = src;
-	std::cout << "Cure default constructor called" << std::endl;
+Cure::Cure(const Cure &src) : AMateria(src.type){
+//	std::cout << "Cure copy constructor called" << std::endl;
 	return;
 }
 
 Cure &Cure::operator=(const Cure &rhs){
-	std::cout << "Cure assign constructor called" << std::endl;
-	(void)rhs;
+//	std::cout << "Cure assign constructor called" << std::endl;
+	(Cure)rhs;
 	return *this;
 }
 
 Cure::~Cure(){
-	std::cout << "Cure default destructor called" << std::endl;
+//	std::cout << "Cure default destructor called" << std::endl;
 	return;
 }
 
@@ -33,6 +32,10 @@ std::string const &Cure::getType(void) const{
 }
 
 Cure *Cure::clone() const{
-	Cure *clone = new Cure();
+	Cure *clone = new Cure(*this);
 	return (clone);
+}
+
+void Cure::use(std::string const &name) const{
+	std::cout << "* heals " << name << "'s wounds *" << std::endl;
 }
