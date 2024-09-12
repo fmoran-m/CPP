@@ -1,17 +1,17 @@
 #include "Cure.hpp"
 #include <iostream>
 
-Cure::Cure() : type("cure"){
+Cure::Cure() : AMateria("cure"){
 	std::cout << "Cure default constructor called" << std::endl;
 	return;
 }
 
-Cure::Cure(std::string const &type) : type(type){
+Cure::Cure(std::string const &type) : AMateria(type){
 	std::cout << "Cure type constructor called" << std::endl;
 	return;
 }
 
-Cure::Cure(const Cure &src) : AMateria(), type("cure"){
+Cure::Cure(const Cure &src) : AMateria("cure"){
 	*this = src;
 	std::cout << "Cure default constructor called" << std::endl;
 	return;

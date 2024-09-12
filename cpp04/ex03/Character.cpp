@@ -34,6 +34,14 @@ Character &Character::operator=(const Character &rhs){
 }
 
 Character::~Character(){
+	for (int i = 0; i < 4; i++)
+	{
+		if (inventory[i])
+		{
+			delete inventory[i];
+			inventory[i] = NULL;
+		}
+	}
 	std::cout << "Character destructor called" << std::endl;
 	return;
 }
@@ -60,7 +68,7 @@ void	Character::unequip(int idx){
 		std::cout << "Unequip Error: The inventory index " << idx << " does not exist" << std::endl;
 		return;
 	}
-	inventory[idx] = 0;
+	inventory[idx] = NULL;
 	return;
 }
 
@@ -70,7 +78,7 @@ void Character::use(int idx, ICharacter& target){
 		return;
 	}
 	if (!inventory[idx]){
-		std::cout << "Use Error: The inventory index " << idx << "is empty" << std::endl;
+		std::cout << "Use Error: The inventory index " << idx << " is empty" << std::endl;
 		return;
 	}
 	std::cout << this->name << " casts " << inventory[idx]->getType() << " on " << target.getName()

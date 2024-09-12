@@ -8,13 +8,14 @@ int main(void){
 
 	AMateria *ice1 = new Ice();
 
-//	std::cout << "Ice type: " << ice.getType() << std::endl;
-//	std::cout << "Cure type: " << cure.getType() << std::endl;
+	std::cout << "Ice type: " << ice1->getType() << std::endl;
 
-	ICharacter *character = new Character("Pepe");
-	character->equip(ice1);
-	character->use(0, *character);
-	delete character;
-	delete ice1;
+	std::string pepeName = "Pepe";
+	ICharacter *pepe = new Character(pepeName);
+	ICharacter *pepeCpy = new Character(*pepe);
+	pepe->equip(ice1);
+	pepe->use(0, *enemy);
+	delete pepe;
+	delete enemy;
 	return 0; 
 }

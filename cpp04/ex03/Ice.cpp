@@ -1,17 +1,17 @@
 #include "Ice.hpp"
 #include <iostream>
 
-Ice::Ice() : type("ice"){
+Ice::Ice() : AMateria("ice"){
 	std::cout << "Ice default constructor called" << std::endl;
 	return;
 }
 
-Ice::Ice(std::string const &type) : type(type){
+Ice::Ice(std::string const &type) : AMateria(type){
 	std::cout << "Ice type constructor called" << std::endl;
 	return;
 }
 
-Ice::Ice(const Ice &src) : AMateria(), type("ice"){
+Ice::Ice(const Ice &src) : AMateria("ice"){
 	*this = src;
 	std::cout << "Ice default constructor called" << std::endl;
 	return;
