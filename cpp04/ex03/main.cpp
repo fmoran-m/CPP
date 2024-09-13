@@ -2,27 +2,45 @@
 #include "Ice.hpp"
 #include "Cure.hpp"
 #include "Character.hpp"
+#include "MateriaSource.hpp"
 #include <iostream>
 
-int main(void){
+int main()
+{
+	std::cout << std::endl;
+	std::cout << "- SUBJECT MAIN -" << std::endl;
+	std::cout << std::endl;
+	
+	IMateriaSource* src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+	ICharacter* me = new Character("me");
 
-	AMateria *ice1 = new Ice();
-	AMateria *ice2 = new Ice();
-	AMateria *cure1 = new Cure();
-	AMateria *cure2 = new Cure();
+	AMateria* tmp;
+	tmp = src->createMateria("ice");
+	std::cout << tmp << std::endl;
+	me->equip(tmp);
+	std::cout << tmp << std::endl;
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
 
-	ICharacter *pepe = new Character("pepe");
-	ICharacter *betis = new Character("betis");
-	pepe->equip(ice1);
-	pepe->equip(ice2);
-	pepe->equip(cure1);
-	pepe->equip(cure2);
-	pepe->use(0, *betis);
-	pepe->use(1, *betis);
-	pepe->use(2, *betis);
-	pepe->use(3, *betis);
-	*betis = *pepe;
-	delete(betis);
-	delete(pepe);
-	return 0; 
+
+	ICharacter* bob = new Character("bob");
+
+	me->use(0, *bob);
+	me->use(1, *bob);
+
+	me->unequip(0);
+	delete tmp;
+
+	delete bob;
+	delete me;
+	delete src;
+
+	std::cout << std::endl;
+	std::cout << "- SUBJECT MAIN -" << std::endl;
+	std::cout << std::endl;
+
+	return 0;
 }
+

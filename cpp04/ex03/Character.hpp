@@ -12,12 +12,13 @@ public:
 	Character &operator=(const Character &rhs);
 	~Character();
 
-	std::string const & getName() const;
-	void equip(AMateria* m);
-	void unequip(int idx);
-	void use(int idx, ICharacter& target);
-	AMateria *inventory[4];
+	std::string const	&getName() const;
+	void				equip(AMateria* m);
+	void				unequip(int idx);
+	void				use(int idx, ICharacter& target);
+
 private:
-	std::string name;
+	AMateria			*inventory[4];
+	std::string			name;
 };
 #endif

@@ -5,6 +5,7 @@ Character::Character() : name("default"){
 	for (int i = 0; i < 4; i++){
 		inventory[i] = NULL;
 	}
+	this->unequipPtr = NULL;
 	//std::cout << "Character default constructor called" << std::endl;
 	return;
 }
@@ -24,7 +25,7 @@ Character::Character(const Character &src){
 }
 	
 Character &Character::operator=(const Character &rhs){
-	std::cout << "Character assign operator called" << std::endl;
+//	std::cout << "Character assign operator called" << std::endl;
 	name = rhs.name;
 	for (int i = 0; i < 4; i++)
 	{
@@ -73,6 +74,7 @@ void	Character::unequip(int idx){
 		std::cout << "Unequip Error: The inventory index " << idx << " does not exist" << std::endl;
 		return;
 	}
+	unequipPtr = inventory[idx];
 	inventory[idx] = NULL;
 	return;
 }

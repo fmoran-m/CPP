@@ -12,11 +12,20 @@ MateriaSource::MateriaSource(const MateriaSource &src){
 	*this = src;
 	return;
 }
+
 MateriaSource &MateriaSource::operator=(const MateriaSource &rhs){
 	for (int i = 0; i < 4; i++)
-		grimoire[i] = rhs.grimoire[i];
+	{
+		if (this->grimoire[i])
+			delete this->grimoire[i];
+		if (rhs.grimoire[i])
+			this->grimoire[i] = rhs.grimoire[i]->clone();
+		else
+			this->grimoire[i] = NULL;
+	}
 	return (*this);
 }
+
 MateriaSource::~MateriaSource(){
 	for (int i = 0; i < 4; i++)
 	{
@@ -30,16 +39,17 @@ MateriaSource::~MateriaSource(){
 }
 
 void	MateriaSource::learnMateria(AMateria* materia){
-	for (int i = 0; i < 4; i++){
-		if (!grimoire[i])
+	for (int i = 0; i < 4; i++)
+	{
+		if (grimoire[i] == NULL)
 		{
-			this->grimoire[i] = materia;
+			grimoire[i] = materia;
 			return;
 		}
-		std::cout << "Full inventory" << std::endl;
+	}
+		std::cout << "Full Grimoire" << std::endl;
 		delete materia;
 		return;
-	}
 }
 
 AMateria *MateriaSource::createMateria(std::string const & type){
