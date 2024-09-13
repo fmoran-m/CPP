@@ -32,7 +32,7 @@ std::string const &Cure::getType(void) const{
 }
 
 Cure *Cure::clone() const{
-	Cure *clone = new Cure(*this);
+	Cure *clone = new Cure("cure");
 	return (clone);
 }
 

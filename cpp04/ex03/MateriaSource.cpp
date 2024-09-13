@@ -14,14 +14,20 @@ MateriaSource::MateriaSource(const MateriaSource &src){
 }
 
 MateriaSource &MateriaSource::operator=(const MateriaSource &rhs){
+	if (this == &rhs)
+		return *this;
 	for (int i = 0; i < 4; i++)
 	{
 		if (this->grimoire[i])
-			delete this->grimoire[i];
+		{
+			delete grimoire[i];
+			grimoire[i] = NULL;
+		}
+	}
+	for (int i = 0; i < 4; i++)
+	{
 		if (rhs.grimoire[i])
 			this->grimoire[i] = rhs.grimoire[i]->clone();
-		else
-			this->grimoire[i] = NULL;
 	}
 	return (*this);
 }

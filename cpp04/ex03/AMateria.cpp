@@ -23,7 +23,7 @@ AMateria &AMateria::operator=(const AMateria &rhs){
 }
 
 AMateria::~AMateria(){
-	std::cout << "AMateria default destructor called" << std::endl;
+//	std::cout << "AMateria default destructor called" << std::endl;
 	return;
 }
 
