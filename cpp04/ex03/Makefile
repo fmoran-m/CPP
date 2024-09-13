@@ -10,13 +10,16 @@ SRC = main.cpp \
 	  AMateria.cpp \
 	  Cure.cpp \
 	  Ice.cpp \
-	  Character.cpp
+	  Character.cpp \
+	  MateriaSource.cpp
 
 INCLUDE = AMateria.hpp \
 		  Cure.hpp \
 		  Ice.hpp \
 		  ICharacter.hpp \
-		  Character.hpp
+		  Character.hpp \
+		  IMateriaSource.hpp \
+		  MateriaSource.hpp
 
 OBJS = ${SRC:.cpp=.o}
 
