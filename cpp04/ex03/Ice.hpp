@@ -13,7 +13,6 @@ public:
 	Ice &operator=(const Ice &rhs);
 	~Ice();
 
-	std::string const	&getType(void) const;
 	Ice*				clone() const;
 	void				use(std::string const &name) const;
 

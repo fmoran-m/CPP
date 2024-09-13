@@ -27,12 +27,8 @@ Ice::~Ice(){
 	return;
 }
 
-std::string const &Ice::getType(void) const{
-	return (this->type);
-}
-
 Ice *Ice::clone() const{
-	Ice *clone = new Ice("ice");
+	Ice *clone = new Ice(this->getType());
 	return (clone);
 }
 

@@ -15,7 +15,6 @@ public:
 	~Cure();
 
 	Cure*				clone() const;
-	std::string const	&getType(void) const;
 	void				use(std::string const &name) const;
 
 protected:

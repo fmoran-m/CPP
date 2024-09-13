@@ -27,12 +27,8 @@ Cure::~Cure(){
 	return;
 }
 
-std::string const &Cure::getType(void) const{
-	return (this->type);
-}
-
 Cure *Cure::clone() const{
-	Cure *clone = new Cure("cure");
+	Cure *clone = new Cure(this->getType());
 	return (clone);
 }
 
