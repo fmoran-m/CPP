@@ -2,9 +2,8 @@
 #include <iostream>
 
 Character::Character() : name("default"){
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < 4; i++)
 		inventory[i] = NULL;
-	}
 	//std::cout << "Character default constructor called" << std::endl;
 	return;
 }
@@ -19,6 +18,8 @@ Character::Character(std::string name) : name(name){
 
 Character::Character(const Character &src){
 	//std::cout << "Character copy constructor called" << std::endl;
+	for (int i = 0; i < 4; i++)
+		inventory[i] = NULL;
 	*this = src;
 	return;
 }

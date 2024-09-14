@@ -9,6 +9,8 @@ MateriaSource::MateriaSource()
 }
 
 MateriaSource::MateriaSource(const MateriaSource &src){
+	for (int i = 0; i < 4; i++)
+		grimoire[i] = NULL;
 	*this = src;
 	return;
 }

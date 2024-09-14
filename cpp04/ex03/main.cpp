@@ -132,9 +132,11 @@ int main()
 	meCpy.use(3, bob);
 	}
 	{
-/*
-	ICharacter *me = new Character("me");
-	ICharacter *meCpy = new Character("meCpy");
+
+	std::cout << "---------------------" << std::endl;
+
+	Character *me = new Character("me");
+	Character *meCpy = new Character("meCpy");
 
 	IMateriaSource* src = new MateriaSource();
 	src->learnMateria(new Ice("ice"));
@@ -158,9 +160,33 @@ int main()
 	meCpy->use(2, *me);
 	meCpy->use(3, *me);
 	delete(me);
+	delete(meCpy); //Delete both because they store differenten instances
+	delete(src);
+	{
+	Character *me = new Character("me");
+
+	IMateriaSource* src = new MateriaSource();
+	src->learnMateria(new Ice("ice"));
+	src->learnMateria(new Ice("fire"));
+	src->learnMateria(new Cure("cure"));
+	src->learnMateria(new Cure("wind"));
+
+	AMateria* tmp;
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("fire");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
+	tmp = src->createMateria("wind");
+	me->equip(tmp);
+
+	Character *meCpy = new Character(*me);
+	delete(me);
 	delete(meCpy);
 	delete(src);
-*/
+
+	}
 	return 0;
 }
 
