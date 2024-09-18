@@ -9,7 +9,7 @@ RM = rm -f
 SRC = main.cpp \
 	  Bureaucrat.cpp
 
-INCLUDE = Bureaucrat.cpp
+INCLUDE = Bureaucrat.hpp
 
 OBJS = ${SRC:.cpp=.o}
 

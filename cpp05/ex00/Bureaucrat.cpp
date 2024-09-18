@@ -60,3 +60,16 @@ std::string const Bureaucrat::getName(void) const{
 int	Bureaucrat::getGrade(void) const{
 	return (this->_grade);
 }
+
+const char *Bureaucrat::GradeTooHighException::what(void) const throw(){
+	return ("Bureaucrat is already Max Grade");
+}
+
+const char *Bureaucrat::GradeTooLowException::what(void) const throw(){
+	return ("Bureaucrat is already Min Grade");
+}
+
+std::ostream	&operator<<(std::ostream &out, Bureaucrat const &rhs){
+	out << rhs.getName() << ", bureaucrat grade " << rhs.getGrade();
+	return out;
+}
