@@ -106,6 +106,5 @@ std::cout << "---EIGHTH---" << std::endl;
 		std::cout << "Error: " << e.what() << std::endl;
 	}
 
-
-return 0;
+	return 0;
 }

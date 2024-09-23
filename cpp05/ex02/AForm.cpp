@@ -68,8 +68,7 @@ const char *AForm::GradeTooLowException::what(void) const throw(){
 void AForm::beSigned(Bureaucrat &bur){
 	if (bur.getGrade() > this->_signGrade)
 		throw AForm::GradeTooLowException();
-	if (bur.signForm(this) == TRUE)
-		this->_signBool = TRUE;
+	this->_signBool = TRUE;
 	return;
 }
 
