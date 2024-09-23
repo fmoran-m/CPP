@@ -69,17 +69,14 @@ const char *Bureaucrat::GradeTooLowException::what(void) const throw(){
 	return ("Bureaucrat grade too low");
 }
 
-void Bureaucrat::signForm(Form &form){
-	if (form.getSignBool())
+bool Bureaucrat::signForm(AForm *form){
+	if (form->getSignBool())
 	{
-		std::cout << _name << " couldn`t sign " << form.getName() << " because it is alredy signed" << std::endl;
+		std::cout << _name << " couldn`t sign " << form->getName() << " because it is alredy signed" << std::endl;
+		return FALSE;
 	}
-	else
-	{
-		form.beSigned(*this);;
-		std::cout << _name << " signed " << form.getName() << std::endl;
-	}
-	return;
+	std::cout << _name << " signed " << form->getName() << std::endl;
+	return TRUE;
 }
 
 std::ostream	&operator<<(std::ostream &out, Bureaucrat const &rhs){

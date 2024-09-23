@@ -1,6 +1,6 @@
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
-# include "Form.hpp"
+# include "AForm.hpp"
 # include <string>
 
 # define	MIN_GRADE 150
@@ -19,7 +19,7 @@ public:
 
 	void				promotion(void);
 	void				relegation(void);
-	void				signForm(Form &form);
+	bool				signForm(AForm *form);
 
 	std::string const	getName(void) const;
 	int					getGrade(void) const;	

@@ -12,9 +12,9 @@ Form::Form(void) : _name("Form"), _signGrade(MIN_GRADE),
 Form::Form(std::string name, int signGrade, int executeGrade, bool signBool)
 : _name(name), _signGrade(signGrade), _executeGrade(executeGrade), _signBool(signBool)
 {
-	if (signGrade < MAX_GRADE)
+	if (signGrade < MAX_GRADE || executeGrade < MAX_GRADE)
 		throw Form::GradeTooHighException();
-	if (signGrade > MIN_GRADE)
+	if (signGrade > MIN_GRADE || executeGrade > MIN_GRADE)
 		throw Form::GradeTooLowException();
 	std::cout << "Form complete constructor called" << std::endl;
 	return;
@@ -58,18 +58,17 @@ bool Form::getSignBool(void) const{
 }
 
 const char *Form::GradeTooHighException::what(void) const throw(){
-	return ("Form grade too high");
+	return ("Grade too high");
 }
 
 const char *Form::GradeTooLowException::what(void) const throw(){
-	return ("Form grade too low");
+	return ("Grade too low");
 }
 
 void Form::beSigned(Bureaucrat &bur){
 	if (bur.getGrade() > this->_signGrade)
 		throw Form::GradeTooLowException();
-	if (bur.signForm(this) == TRUE)
-		this->_signBool = TRUE;
+	this->_signBool = TRUE;
 	return;
 }
 

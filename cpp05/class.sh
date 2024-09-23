@@ -17,7 +17,7 @@ ${CLASS}::${CLASS}(void) {
 
 ${CLASS}::${CLASS}(${CLASS} const &src) {
 	//std::cout << "${CLASS} copy constructor called" << std::endl;
-	*this = other;
+	*this = src;
 	return;
 }
 

@@ -10,7 +10,7 @@ int main(void)
 		Form		A12("A12", 100, 100, FALSE);
 
 		std::cout << A12 << std::endl;
-		A12.beSigned(pepe);
+		pepe.signForm(A12);
 		std::cout << A12 << std::endl;
 	}catch (std::exception &e){
 		std::cout << "Error: " << e.what() << std::endl;
@@ -22,7 +22,7 @@ int main(void)
 		Form		A12("A12", 100, 100, FALSE);
 
 		std::cout << A12 << std::endl;
-		A12.beSigned(pepe);
+		pepe.signForm(A12);
 		std::cout << A12 << std::endl;
 	}catch (std::exception &e){
 		std::cout << "Error: " << e.what() << std::endl;
@@ -34,7 +34,7 @@ int main(void)
 		Form		A12("A12", 100, 100, TRUE);
 
 		std::cout << A12 << std::endl;
-		A12.beSigned(pepe);
+		pepe.signForm(A12);
 		//Print error, but not exception
 		std::cout << A12 << std::endl;
 	}catch (std::exception &e){
@@ -47,7 +47,7 @@ int main(void)
 		Form		A12("A12", 100, 100, FALSE);
 
 		std::cout << A12 << std::endl;
-		A12.beSigned(pepe);
+		pepe.signForm(A12);
 		//Exception
 		std::cout << A12 << std::endl;
 	}catch (std::exception &e){
@@ -56,12 +56,12 @@ int main(void)
 
 	std::cout << "---FIFTH---" << std::endl;
 	try{
-		Bureaucrat	pepe("Pepe", 151);
-		Form		A12("A12", 100, 100, FALSE);
+		Bureaucrat	pepe("Pepe", 1);
+		Form		A12("A12", 151, 100, FALSE);
 		//Exception
 
 		std::cout << A12 << std::endl;
-		A12.beSigned(pepe);
+		pepe.signForm(A12);
 		std::cout << A12 << std::endl;
 	}catch (std::exception &e){
 		std::cout << "Error: " << e.what() << std::endl;
@@ -69,16 +69,43 @@ int main(void)
 
 	std::cout << "---SIXTH---" << std::endl;
 	try{
-		Bureaucrat	pepe("Pepe", 0);
-		Form		A12("A12", 100, 100, FALSE);
+		Bureaucrat	pepe("Pepe", 1);
+		Form		A12("A12", 0, 100, FALSE);
 		//Exception
 
 		std::cout << A12 << std::endl;
-		A12.beSigned(pepe);
+		pepe.signForm(A12);
 		std::cout << A12 << std::endl;
 	}catch (std::exception &e){
 		std::cout << "Error: " << e.what() << std::endl;
 	}
+
+std::cout << "---SEVENTH---" << std::endl;
+	try{
+		Bureaucrat	pepe("Pepe", 1);
+		Form		A12("A12", 100, 151, FALSE);
+		//Exception
+
+		std::cout << A12 << std::endl;
+		pepe.signForm(A12);
+		std::cout << A12 << std::endl;
+	}catch (std::exception &e){
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+
+std::cout << "---EIGHTH---" << std::endl;
+	try{
+		Bureaucrat	pepe("Pepe", 1);
+		Form		A12("A12", 100, 0, FALSE);
+		//Exception
+
+		std::cout << A12 << std::endl;
+		pepe.signForm(A12);
+		std::cout << A12 << std::endl;
+	}catch (std::exception &e){
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+
 
 return 0;
 }
