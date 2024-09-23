@@ -2,6 +2,7 @@
 # define BUREAUCRAT_HPP
 # include "Form.hpp"
 # include <string>
+
 # define	MIN_GRADE 150
 # define	MAX_GRADE 1
 # define	TRUE 1

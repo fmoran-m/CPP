@@ -10,18 +10,18 @@ Bureaucrat::Bureaucrat(void) : _name("Bureaucrat"), _grade(MIN_GRADE){
 }
 
 Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name){
-	std::cout << "Bureaucrat complete constructor called" << std::endl;
 	if (grade < MAX_GRADE)
 		throw Bureaucrat::GradeTooHighException();
 	if (grade > MIN_GRADE )
 		throw Bureaucrat::GradeTooLowException();
 	_grade = grade;
+	std::cout << "Bureaucrat complete constructor called" << std::endl;
 	return;
 }
 
 Bureaucrat::Bureaucrat(Bureaucrat const &src) : _name(src._name){
-	std::cout << "Bureaucrat copy constructor called" << std::endl;
 	*this = src;
+	std::cout << "Bureaucrat copy constructor called" << std::endl;
 	return;
 }
 
@@ -31,11 +31,11 @@ Bureaucrat::~Bureaucrat(void) {
 }
 
 Bureaucrat &Bureaucrat::operator=(Bureaucrat const &rhs) {
-	std::cout << "Bureaucrat copy constructor called" << std::endl;
 	if (this == &rhs){
 		return (*this);
 	}
 	this->_grade = rhs._grade;
+	std::cout << "Bureaucrat copy constructor called" << std::endl;
 	return (*this);
 }
 

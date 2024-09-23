@@ -12,27 +12,27 @@ Form::Form(void) : _name("Form"), _signGrade(MIN_GRADE),
 Form::Form(std::string name, int signGrade, int executeGrade, bool signBool)
 : _name(name), _signGrade(signGrade), _executeGrade(executeGrade), _signBool(signBool)
 {
-	std::cout << "Form complete constructor called" << std::endl;
 	if (signGrade < MAX_GRADE)
 		throw Form::GradeTooHighException();
 	if (signGrade > MIN_GRADE)
 		throw Form::GradeTooLowException();
+	std::cout << "Form complete constructor called" << std::endl;
 	return;
 }
 
 Form::Form(Form const &src) : _name(src._name), _signGrade(src._signGrade), _executeGrade(src._executeGrade)
 {
-	std::cout << "Form copy constructor called" << std::endl;
 	*this = src;
+	std::cout << "Form copy constructor called" << std::endl;
 	return;
 }
 
 Form &Form::operator=(Form const &rhs) {
-	std::cout << "Form copy constructor called" << std::endl;
 	if (this == &rhs){
 		return (*this);
 	}
 	this->_signBool = rhs._signBool;
+	std::cout << "Form copy constructor called" << std::endl;
 	return (*this);
 }
 
@@ -65,15 +65,17 @@ const char *Form::GradeTooLowException::what(void) const throw(){
 	return ("Form grade too low");
 }
 
-std::ostream	&operator<<(std::ostream &out, Form const &rhs){
-	out << rhs.getName() << ", form grade " << rhs.getSignGrade();
-	return out;
-}
-
 void Form::beSigned(Bureaucrat &bur){
-	if (bur.getGrade() < this->_signGrade)
+	if (bur.getGrade() > this->_signGrade)
 		throw Form::GradeTooLowException();
 	if (bur.signForm(this) == TRUE)
 		this->_signBool = TRUE;
 	return;
+}
+
+std::ostream	&operator<<(std::ostream &out, Form const &rhs){
+	std::cout << rhs.getName() << ", form sign grade " << rhs.getSignGrade() <<
+		", form execute grade " << rhs.getExecuteGrade() << ", sign bool "
+		<< rhs.getSignBool();
+	return out;
 }
