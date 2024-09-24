@@ -58,11 +58,15 @@ bool AForm::getSignBool(void) const{
 }
 
 const char *AForm::GradeTooHighException::what(void) const throw(){
-	return ("Form grade too high");
+	return ("Grade is too high");
 }
 
 const char *AForm::GradeTooLowException::what(void) const throw(){
-	return ("Form grade too low");
+	return ("Grade is too low");
+}
+
+const char *AForm::AlreadySignedException::what(void) const throw(){
+	return ("is already signed");
 }
 
 const char *AForm::SignatureFailureException::what(void) const throw(){
@@ -70,6 +74,8 @@ const char *AForm::SignatureFailureException::what(void) const throw(){
 }
 
 void AForm::beSigned(Bureaucrat &bur){
+	if (this->getSignBool())
+		throw AForm::AlreadySignedException();
 	if (bur.getGrade() > this->_signGrade)
 		throw AForm::GradeTooLowException();
 	this->_signBool = TRUE;

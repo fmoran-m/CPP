@@ -58,14 +58,20 @@ bool Form::getSignBool(void) const{
 }
 
 const char *Form::GradeTooHighException::what(void) const throw(){
-	return ("Grade too high");
+	return ("Grade is too high");
 }
 
 const char *Form::GradeTooLowException::what(void) const throw(){
-	return ("Grade too low");
+	return ("Grade is too low");
+}
+
+const char *Form::AlreadySignedException::what(void) const throw(){
+	return ("is already signed");
 }
 
 void Form::beSigned(Bureaucrat &bur){
+	if (this->getSignBool())
+		throw Form::AlreadySignedException();
 	if (bur.getGrade() > this->_signGrade)
 		throw Form::GradeTooLowException();
 	this->_signBool = TRUE;

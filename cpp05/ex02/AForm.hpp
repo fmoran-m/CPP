@@ -36,6 +36,7 @@ class AForm {
 		void				execute(Bureaucrat const &executor)	const;
 		virtual void		executeThis(void) const = 0;
 
+
 	class GradeTooHighException : public std::exception{
 		public:
 			virtual const char *what() const throw();
@@ -45,6 +46,12 @@ class AForm {
 		public:
 			virtual const char *what() const throw();
 	};
+
+	class AlreadySignedException : public std::exception{
+		public:
+			virtual const char *what() const throw();
+	};
+
 	class SignatureFailureException : public std::exception{
 		public:
 			virtual const char *what() const throw();
