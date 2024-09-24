@@ -58,11 +58,15 @@ bool AForm::getSignBool(void) const{
 }
 
 const char *AForm::GradeTooHighException::what(void) const throw(){
-	return ("AForm grade too high");
+	return ("Form grade too high");
 }
 
 const char *AForm::GradeTooLowException::what(void) const throw(){
-	return ("AForm grade too low");
+	return ("Form grade too low");
+}
+
+const char *AForm::SignatureFailureException::what(void) const throw(){
+	return ("Form not signed");
 }
 
 void AForm::beSigned(Bureaucrat &bur){
@@ -77,9 +81,25 @@ void AForm::setSignBool(bool signBool){
 	return;
 }
 
+void AForm::execute(Bureaucrat const &executor) const{
+	if (this->getSignBool() == FALSE){
+		throw AForm::SignatureFailureException();
+	}
+	if (this->getExecuteGrade() < executor.getGrade()){
+		throw Bureaucrat::GradeTooLowException();
+	}
+	this->executeThis();
+	return;
+}
+
 std::ostream	&operator<<(std::ostream &out, AForm const &rhs){
 	std::cout << rhs.getName() << ", form sign grade " << rhs.getSignGrade() <<
 		", form execute grade " << rhs.getExecuteGrade() << ", sign bool "
 		<< rhs.getSignBool();
 	return out;
 }
+
+	class GradeTooHighException : public std::exception{
+		public:
+			virtual const char *what() const throw();
+	};

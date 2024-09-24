@@ -32,7 +32,9 @@ class AForm {
 
 		void				setSignBool(bool signBool);
 
-		virtual void		beSigned(Bureaucrat &bur) = 0; //Cambiar a execute cuando toque
+		void				beSigned(Bureaucrat &bur);
+		void				execute(Bureaucrat const &executor)	const;
+		virtual void		executeThis(void) const = 0;
 
 	class GradeTooHighException : public std::exception{
 		public:
@@ -40,6 +42,10 @@ class AForm {
 	};
 
 	class GradeTooLowException : public std::exception{
+		public:
+			virtual const char *what() const throw();
+	};
+	class SignatureFailureException : public std::exception{
 		public:
 			virtual const char *what() const throw();
 	};

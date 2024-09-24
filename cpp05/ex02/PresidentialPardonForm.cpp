@@ -2,8 +2,16 @@
 #include "AForm.hpp"
 #include <iostream>
 
-PresidentialPardonForm::PresidentialPardonForm(void) : AForm("Default", 25, 5, FALSE){
+PresidentialPardonForm::PresidentialPardonForm(void) : AForm("PresidentialPardonForm", 25, 5, FALSE){
+	this->_target = "target";
 	std::cout << "PresidentialPardonForm default constructor called" << std::endl;
+	return;
+}
+
+PresidentialPardonForm::PresidentialPardonForm(std::string target) : AForm("PresidentialPardonForm", 25, 5, FALSE){
+	this->_target = target;
+	std::cout << "PresidentialPardonForm target constructor called" << std::endl;
+	return;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const &src) : AForm(src.getName(), 25, 5, src.getSignBool()) {
@@ -21,7 +29,17 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(PresidentialPardonForm
 	if (this == &rhs){
 		return (*this);
 	}
+	this->_target = rhs.getTarget();
+	this->setSignBool(rhs.getSignBool());
 	std::cout << "PresidentialPardonForm copy constructor called" << std::endl;
 	return (*this);
 }
 
+std::string PresidentialPardonForm::getTarget(void) const{
+	return (this->_target);
+}
+
+void PresidentialPardonForm::executeThis(void) const{
+	std::cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox" << std::endl;
+	return;
+}

@@ -20,6 +20,7 @@ public:
 	void				promotion(void);
 	void				relegation(void);
 	void				signForm(AForm &form);
+	void				executeForm(AForm const &form);
 
 	std::string const	getName(void) const;
 	int					getGrade(void) const;	
