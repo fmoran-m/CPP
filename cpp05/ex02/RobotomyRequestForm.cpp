@@ -42,6 +42,7 @@ std::string RobotomyRequestForm::getTarget(void) const{
 void RobotomyRequestForm::executeThis(void) const{
 	int n;
 
+	srand(time(NULL));
 	n = rand();
 	if (n % 2 == 0)
 		std::cout << this->getTarget() << " has been robotomized successfully" << std::endl;
