@@ -10,11 +10,13 @@ Base::~Base(void) {
 }
 
 Base *generate(void){
-	int n = 0;
-	n++;
+	static int seed = 0;
 
-	srand(time(NULL));
-	n = (rand() % 3);
+	if (seed < 1){
+		srand(time(NULL));
+		seed++;
+	}
+	int n = (rand() % 3);
 	
 	if (n == 0)
 		return (new A);
@@ -24,13 +26,40 @@ Base *generate(void){
 }
 
 void identify(Base *p){
-	(void)p;
-	//Dinamic Cast a puntero
-	return;
+    A *a = dynamic_cast<A *>(p);
+	if (a){
+		std::cout << "class A" << std::endl;
+		return;
+	}
+    B *b = dynamic_cast<B *>(p);
+	if (b){
+		std::cout << "class B" << std::endl;
+		return;
+	}
+    C *c = dynamic_cast<C *>(p);
+	if (c){
+		std::cout << "class C" << std::endl;
+		return;
+	}
 }
 
 void identify(Base &p){
-	(void)p;
-	//Identificacion directa?
-	return;
+	try{
+		A &a = dynamic_cast<A &>(p);
+		(void)a;
+		std::cout << "class A" << std::endl;
+		return;
+	}catch(std::exception &e){};
+	try{
+		B b = dynamic_cast<B &>(p);
+		(void)b;
+		std::cout << "class B" << std::endl;
+		return;
+	}catch(std::exception &e){};
+	try{
+		C c = dynamic_cast<C &>(p);
+		(void)c;
+		std::cout << "class C" << std::endl;
+		return;
+	}catch(std::exception &e){};
 }

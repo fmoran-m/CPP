@@ -6,7 +6,11 @@
 
 int main(void)
 {
-	Base *ptr = generate();
-	delete ptr;
+	for (int i = 0; i < 3; i++){
+		Base *ptr = generate();
+		identify(ptr);
+		identify(*ptr);
+		delete ptr;
+	}
 	return 0;
 }

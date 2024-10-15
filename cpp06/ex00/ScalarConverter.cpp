@@ -25,14 +25,17 @@ void ScalarConverter::convert(std::string type){
 	bool (*isTypePtr[])(std::string &) = {&isInt, &isDouble, &isFloat, &isChar};
 	void (*fromType[])(std::string &) = {&fromInt, &fromDouble, &fromFloat, &fromChar};
 
-	if (isPseudoLiteral(type))
-		return(fromPseudoLiteral(type));
-	for (int i = 0; i < 4; i++){
-		if ((*isTypePtr[i])(type) == 1){
-			(*fromType[i])(type);
-			return;
+    if (!type.empty())
+    {
+		if (isPseudoLiteral(type))
+			return(fromPseudoLiteral(type));
+		for (int i = 0; i < 4; i++){
+			if ((*isTypePtr[i])(type) == 1){
+				(*fromType[i])(type);
+				return;
+			}
 		}
-	}
+    }
 	std::cerr << "Error: Incorrect type format" << std::endl;
 	return;
 }
