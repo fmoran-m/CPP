@@ -6,10 +6,24 @@ class Array{
 	public:
 		Array();
 		Array(unsigned int n);
-		Array(Array const &src)
+		Array(Array const &src);
 		Array & operator=(Array const &rhs);
+		T & operator[](unsigned int index);
 		~Array();
+
+		unsigned int size(void) const;
+
+		class OutofArrayException : public std::exception{
+			public:
+				virtual const char *what() const throw(){
+					return ("Error: Array index out of bounds");
+				};
+		};
+
 	private:
 		T *array;
-}
+		unsigned int length;
+};
+# include "Array.tpp"
+
 #endif
