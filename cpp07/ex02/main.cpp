@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "Array.hpp"
 
-#define MAX_VAL 750
+#define MAX_VAL 10 
 int main(int, char**)
 {
     Array<int> numbers(MAX_VAL);
@@ -15,10 +15,27 @@ int main(int, char**)
         numbers[i] = value;
         mirror[i] = value;
     }
+    std::cout << "Numbers: ";
+    for (int i = 0; i < MAX_VAL; i++)
+        std::cout << numbers[i];
+    std::cout << std::endl;
+    std::cout << "Mirror: ";
+    for (int i = 0; i < MAX_VAL; i++)
+        std::cout << mirror[i];
+    std::cout << std::endl;
+    //SCOPE
     //SCOPE
     {
         Array<int> tmp = numbers;
+    	std::cout << "Tmp: ";
+        for (int i = 0; i < MAX_VAL; i++)
+			std::cout << tmp[i];
+        std::cout << std::endl;
+    	std::cout << "Test: ";
         Array<int> test(tmp);
+        for (int i = 0; i < MAX_VAL; i++)
+			std::cout << test[i];
+        std::cout << std::endl;
     }
 
     for (int i = 0; i < MAX_VAL; i++)

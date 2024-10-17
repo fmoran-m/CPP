@@ -3,8 +3,11 @@
 
 template <typename T>
 void iter(T *array, int size, void (*f)(T&)){
-	for (int i = 0; i < size; i++){
-		f(array[i]);
+	if (array)
+	{
+		for (int i = 0; i < size; i++){
+			f(array[i]);
+		}
 	}
 	return;
 }
@@ -12,6 +15,6 @@ void iter(T *array, int size, void (*f)(T&)){
 template <typename T>
 void plusOne(T &value){
 	value = value + 1;
-	}
+}
 
 #endif
