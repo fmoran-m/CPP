@@ -2,13 +2,13 @@ NAME = array
 
 CC = c++
 
-CFLAGS = -fsanitize=address -g3 -pedantic -std=c++98 -Wall -Wextra -Werror
+CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
 RM = rm -f
 
 SRC = main.cpp
 
-INCLUDE = Array.hpp
+INCLUDE = Array.hpp Array.tpp
 
 OBJS = ${SRC:.cpp=.o}
 
@@ -17,7 +17,7 @@ $(NAME): $(OBJS) $(INCLUDE)
 
 all: $(NAME)
 
-%.o:%.cpp
+%.o:%.cpp $(INCLUDE)
 		$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

@@ -2,10 +2,7 @@
 # define ARRAY_TPP
 
 template <class T>
-Array<T>::Array() : length(0){
-	array = new T[0];
-	return;
-}
+Array<T>::Array() : array(NULL), length(0){}
 
 template <class T>
 Array<T>::Array(unsigned int n) : length(n){
