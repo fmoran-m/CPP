@@ -11,7 +11,7 @@ Array<T>::Array(unsigned int n) : length(n){
 }
 
 template <class T>
-Array<T>::Array(Array const &src){ 
+Array<T>::Array(Array const &src) : array(NULL), length(0){ 
 	*this = src;
 	return;
 }
@@ -20,13 +20,19 @@ template <class T>
 Array<T> & Array<T>::operator=(Array const &rhs){
 	if (this == &rhs)
 		return (*this);
-	length = rhs.size();
+
 	if (this->array)
 		delete [] array;
-	array = new T[length];
-	for (unsigned int i = 0; i < length; i++){
-		array[i] = rhs.array[i];
+
+	length = rhs.size();
+	if (length > 0){
+	    array = new T[length];
+	    for (unsigned int i = 0; i < length; i++){
+		 	array[i] = rhs.array[i];
+	    }
 	}
+	else
+	    array = NULL;
 	return *this;
 }
 
