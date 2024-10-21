@@ -24,7 +24,6 @@ int main(void)
         std::cout << mirror[i];
     std::cout << std::endl;
     //SCOPE
-    //SCOPE
     {
         Array<int> tmp = numbers;
     	std::cout << "Tmp: ";
