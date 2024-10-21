@@ -6,7 +6,7 @@ Array<T>::Array() : array(NULL), length(0){}
 
 template <class T>
 Array<T>::Array(unsigned int n) : length(n){
-	array = new T[n];
+	array = new T[n]();
 	return;
 }
 
@@ -38,6 +38,13 @@ Array<T> & Array<T>::operator=(Array const &rhs){
 
 template <class T>
 T& Array<T>::operator[](unsigned int index){
+	if (index >= this->size())
+		throw OutofArrayException();
+	return (array[index]);
+}
+
+template <class T>
+const T& Array<T>::operator[](unsigned int index) const {
 	if (index >= this->size())
 		throw OutofArrayException();
 	return (array[index]);

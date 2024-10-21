@@ -6,8 +6,10 @@
 #define MAX_VAL 10 
 int main(void)
 {
+	std::cout << "-----REGULAR-----" << std::endl;
+	{
     Array<int> numbers(MAX_VAL);
-    int* mirror = new int[MAX_VAL];
+    int* mirror = new int[MAX_VAL]();
     srand(time(NULL));
     for (int i = 0; i < MAX_VAL; i++)
     {
@@ -68,6 +70,46 @@ int main(void)
         numbers[i] = rand();
     }
     delete [] mirror;//
+	}
+
+	std::cout << "-----CONSTANT ARRAY-----" << std::endl;
+
+	{
+	Array<int> const numbers(MAX_VAL);
+    int* mirror = new int[MAX_VAL]();
+    std::cout << "Numbers: ";
+    for (int i = 0; i < MAX_VAL; i++)
+        std::cout << numbers[i];
+    std::cout << std::endl;
+    std::cout << "Mirror: ";
+    for (int i = 0; i < MAX_VAL; i++)
+        std::cout << mirror[i];
+    std::cout << std::endl;
+    //SCOPE
+    {
+        Array<int> tmp = numbers;
+    	std::cout << "Tmp: ";
+        for (int i = 0; i < MAX_VAL; i++)
+			std::cout << tmp[i];
+        std::cout << std::endl;
+    	std::cout << "Test: ";
+        Array<int> test(tmp);
+        for (int i = 0; i < MAX_VAL; i++)
+			std::cout << test[i];
+        std::cout << std::endl;
+        tmp = numbers;
+    }
+
+    for (int i = 0; i < MAX_VAL; i++)
+    {
+        if (mirror[i] != numbers[i])
+        {
+            std::cerr << "didn't save the same value!!" << std::endl;
+            return 1;
+        }
+    }
+    delete [] mirror;//
+	}
 
     return 0;
 }

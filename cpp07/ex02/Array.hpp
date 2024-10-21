@@ -9,6 +9,7 @@ class Array{
 		Array(Array const &src);
 		Array & operator=(Array const &rhs);
 		T & operator[](unsigned int index);
+		const T & operator[](unsigned int index) const;
 		~Array();
 
 		unsigned int size(void) const;
