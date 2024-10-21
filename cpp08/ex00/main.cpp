@@ -2,10 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
-
-void print(int i){
-	std::cout << i << std::endl;
-}
+#include <deque>
 
 int main(void)
 {
@@ -15,14 +12,14 @@ int main(void)
 		vector.push_back(i);
 
 	try{
-		std::cout << "Number exists: " << easyfind(vector, 20) << std::endl;
+		std::cout << "Number exists: " << *(easyfind(vector, 20)) << std::endl;
 	}
 	catch(std::exception &e){
 		std::cout << e.what() << std::endl;
 	}
 
 	try{
-		std::cout << "Number does not exist: " << easyfind(vector, 21) << std::endl;
+		std::cout << "Number does not exist: " << *(easyfind(vector, 21)) << std::endl;
 	}
 	catch(std::exception &e){
 		std::cout << e.what() << std::endl;
@@ -34,16 +31,33 @@ int main(void)
 		list.push_back(i);
 
 	try{
-		std::cout << "Number exists: " << easyfind(list, 20) << std::endl;
+		std::cout << "Number exists: " << *(easyfind(list, 20)) << std::endl;
 	}
 	catch(std::exception &e){
 		std::cout << e.what() << std::endl;
 	}
 
-	std::for_each(list.begin(), list.end(), print);
+	try{
+		std::cout << "Number does not exist: " << *(easyfind(list, 21)) << std::endl;
+	}
+	catch(std::exception &e){
+		std::cout << e.what() << std::endl;
+	}
+
+	std::deque<int> deque;
+
+	for (int i = 0; i <= 20; i++)
+		deque.push_back(i);
 
 	try{
-		std::cout << "Number does not exist: " << easyfind(list, 21) << std::endl;
+		std::cout << "Number exists: " << *(easyfind(deque, 20)) << std::endl;
+	}
+	catch(std::exception &e){
+		std::cout << e.what() << std::endl;
+	}
+
+	try{
+		std::cout << "Number does not exist: " << *(easyfind(deque, 21)) << std::endl;
 	}
 	catch(std::exception &e){
 		std::cout << e.what() << std::endl;

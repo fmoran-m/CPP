@@ -1,20 +1,14 @@
 #include <algorithm>
 #include <iostream>
-
-class IntegerNotFoundException : public std::exception{
-	public:
-		virtual const char *what() const throw(){
-			return ("Error: integer not found");
-		};
-};
+#include <stdexcept>
+#include <iterator>
 
 template <typename T>
-int easyfind(T container, int number){
-	int found = *(std::find(container.begin(), container.end(), number));
+typename T::iterator easyfind(T container, int number){
 
-	std::cout << "found: " << found << std::endl;
-	std::cout << "number: " << number << std::endl;
-	if (found !=  )
-		throw IntegerNotFoundException();
-	return (found);
+	typename T::iterator it = std::find(container.begin(), container.end(), number);
+
+	if (it == container.end())
+		throw std::logic_error("Error: incorrect number");
+	return (it);
 }

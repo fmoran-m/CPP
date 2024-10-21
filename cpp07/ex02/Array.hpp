@@ -14,13 +14,6 @@ class Array{
 
 		unsigned int size(void) const;
 
-		class OutofArrayException : public std::exception{
-			public:
-				virtual const char *what() const throw(){
-					return ("Error: Array index out of bounds");
-				};
-		};
-
 	private:
 		T *array;
 		unsigned int length;
