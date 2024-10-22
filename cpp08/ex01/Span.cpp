@@ -5,6 +5,11 @@
 Span::Span(void) : limit(0){
 	std::cout << "Empty Span class" << std::endl;
 };
+
+Span::Span(unsigned int n) : limit(n){
+	return;
+};
+
 Span::Span(Span const &src) {
 	*this = src;
 	return;
@@ -37,6 +42,18 @@ unsigned int Span::longestSpan(void) const{
 }
 
 unsigned int Span::shortestSpan(void) const{
+	std::vector<unsigned int> tmp = container;
+	unsigned int shortSpan = this->longestSpan();
+
+	unsigned int value;
+
 	if (container.empty() || container.size() == 1)
 		throw std::logic_error("Error: not enough elements");
+	sort(tmp.begin(), tmp.end());
+	for (size_t i = 0; i < tmp.size() - 1; i++){
+		value = std::max(tmp[i], tmp[i + 1]) - std::min(tmp[i], tmp[i + 1]);
+		if (value < shortSpan)
+			shortSpan = value;
+	}
+	return (shortSpan);
 }

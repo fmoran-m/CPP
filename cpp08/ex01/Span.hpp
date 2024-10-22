@@ -5,6 +5,7 @@
 class Span {
 	public:
 		Span(void);
+		Span(unsigned int n);
 		Span(Span const &src);
 		Span &operator=(Span const &rhs);
 		~Span(void);
