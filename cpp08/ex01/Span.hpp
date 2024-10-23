@@ -10,12 +10,14 @@ class Span {
 		Span &operator=(Span const &rhs);
 		~Span(void);
 
-		void addNumber(unsigned int);
-		unsigned int shortestSpan(void)const;
-		unsigned int longestSpan(void)const;
+		void			addNumber(unsigned int);
+		unsigned int	shortestSpan(void)const ;
+		unsigned int	longestSpan(void)const;
+
+		void						fillSpan(void);
 
 	private:
-		std::vector<unsigned int> container;
+		std::vector<unsigned int>	container;
 		unsigned int limit;
 };
 #endif

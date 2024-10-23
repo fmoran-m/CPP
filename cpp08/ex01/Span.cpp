@@ -4,11 +4,12 @@
 
 Span::Span(void) : limit(0){
 	std::cout << "Empty Span class" << std::endl;
-};
+	return;
+}
 
 Span::Span(unsigned int n) : limit(n){
 	return;
-};
+}
 
 Span::Span(Span const &src) {
 	*this = src;
@@ -56,4 +57,11 @@ unsigned int Span::shortestSpan(void) const{
 			shortSpan = value;
 	}
 	return (shortSpan);
+}
+
+void	Span::fillSpan(void){
+	srand(time(NULL));
+	container.resize(limit);
+	std::generate(container.begin(), container.end(), std::rand);
+	return;
 }
