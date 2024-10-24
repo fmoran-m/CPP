@@ -11,10 +11,12 @@ class Span {
 		~Span(void);
 
 		void			addNumber(unsigned int);
-		unsigned int	shortestSpan(void)const ;
+		unsigned int	shortestSpan(void);
 		unsigned int	longestSpan(void)const;
 
-		void						fillSpan(void);
+		void			fillSpan(void);
+		void			printContainer(void);
+		unsigned int	spanSize(void) const;
 
 	private:
 		std::vector<unsigned int>	container;

@@ -42,7 +42,7 @@ unsigned int Span::longestSpan(void) const{
 	 return (*max - *min);
 }
 
-unsigned int Span::shortestSpan(void) const{
+unsigned int Span::shortestSpan(void){
 	std::vector<unsigned int> tmp = container;
 	unsigned int shortSpan = this->longestSpan();
 
@@ -51,8 +51,12 @@ unsigned int Span::shortestSpan(void) const{
 	if (container.empty() || container.size() == 1)
 		throw std::logic_error("Error: not enough elements");
 	sort(tmp.begin(), tmp.end());
-	for (size_t i = 0; i < tmp.size() - 1; i++){
-		value = std::max(tmp[i], tmp[i + 1]) - std::min(tmp[i], tmp[i + 1]);
+
+	std::vector<unsigned int>::iterator it = tmp.begin();
+	std::vector<unsigned int>::iterator next;
+	for (; it < tmp.end() - 1; it++){
+		next = it + 1;
+		value = *next - *it;
 		if (value < shortSpan)
 			shortSpan = value;
 	}
@@ -64,4 +68,19 @@ void	Span::fillSpan(void){
 	container.resize(limit);
 	std::generate(container.begin(), container.end(), std::rand);
 	return;
+}
+
+void	Span::printContainer(void){
+	std::vector<unsigned int>::iterator it = container.begin();
+
+	if (container.empty())
+		throw std::logic_error("Error: empty container");
+	for (; it < container.end(); it++){
+		std::cout << *it << std::endl;
+	}
+	return;
+}
+
+unsigned int Span::spanSize(void) const{
+	return (container.size());
 }
