@@ -14,7 +14,7 @@ void iter(T *array, int size, void (*f)(T&)){
 
 template <typename T>
 void plusOne(T &value){
-	value = value + 1;
+	value = value + static_cast<T>(1);
 }
 
 #endif

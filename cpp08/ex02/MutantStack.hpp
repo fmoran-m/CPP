@@ -8,6 +8,15 @@ template <class T, class C = std::deque<T> >
 class MutantStack : public std::stack<T>{
 	public:
 
+	MutantStack() : std::stack<T>(){};
+	MutantStack(MutantStack const &src) : std::stack<T>(src){};
+	MutantStack &operator=(MutantStack const &rhs){
+		std::stack<T>::operator=(rhs);
+		return (*this);
+	};
+	MutantStack(const C &src) : std::stack<T, C>(src) {};  //Para poder usar el constante
+	~MutantStack(){};
+
 	typedef typename C::iterator iterator;
 	typedef typename C::const_iterator const_iterator;
 
