@@ -11,10 +11,11 @@ class BitcoinExchange {
 		BitcoinExchange &operator=(BitcoinExchange const &rhs);
 		~BitcoinExchange(void);
 
-		void	loadDatabase();
-		std::map<std::string, float> dataBase;
+		void	loadDatabase(void);
+		void	parseInput(std::string const argvStr);
 	private:
 
+		std::map<std::string, float> dataBase;
 		void	storeData(std::string line);
 
 };

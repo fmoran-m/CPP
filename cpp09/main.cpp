@@ -2,16 +2,19 @@
 #include <map>
 #include <iostream>
 #include <ctime>
+#include <fstream>
 
-int main(void)
+int main(int argc, char **argv)
 {
-	std::cout << "date,exchange_rate" << std::endl;
-	BitcoinExchange a;
-
-	a.loadDatabase();
-	std::map<std::string, float>::iterator it = a.dataBase.begin();
-	for (; it != a.dataBase.end(); it++){
-		std::cout << it->first <<','<< it->second << std::endl;
+	std::string argvStr = argv[1];
+	if (argc != 2)
+	{
+		std::cerr << "Error: Incorrect number of arguments" << std::endl;
+		return 1;
 	}
+	BitcoinExchange a;
+	a.loadDatabase();
+	a.parseInput(argvStr);
+
 	return 0;
 }
