@@ -28,9 +28,9 @@ class BitcoinExchange {
 		void			dateValueToMap(std::string &newStr, std::string::iterator &pipe);
 		struct tm		getRealDate(std::string &newStr);
 
-		int			getYear(std::string &date);
-		int			getMonth(std::string &date);
-		int			getDay(std::string &date, int year, int month);
-		bool		isLeapYear(int year);
+		int				getYear(std::string &date);
+		int				getMonth(std::string &date);
+		int				getDay(std::string &date, int year, int month);
+		bool			isLeapYear(int year);
 };
 #endif

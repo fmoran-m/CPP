@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <ctime>
 #include <cctype>
+#include <climits>
 
 BitcoinExchange::BitcoinExchange(void) {}
 BitcoinExchange::~BitcoinExchange(void) {}
@@ -86,8 +87,7 @@ void	BitcoinExchange::parseDate(std::string::iterator &pipe, std::string &newStr
 			throw std::invalid_argument("Error: Date incorrect format");
 		it++;
 	}
-	struct tm time = getRealDate(newStr);
-	(void)time;
+	getRealDate(newStr);
 	return;
 }
 
@@ -98,8 +98,6 @@ void	BitcoinExchange::parseRatio(std::string::iterator &pipe, std::string &newSt
 	std::string::iterator it = pipe + 3;
 	if (it == newStr.end())
 		throw std::invalid_argument(FORMAT_ERROR);
-//	if (*it == '-')
-	//	it++;
 	while (it != newStr.end())
 	{
 		if (!isdigit(*it) && *it != '.')
@@ -110,6 +108,11 @@ void	BitcoinExchange::parseRatio(std::string::iterator &pipe, std::string &newSt
 			point = true;
 		it++;
 	}
+	std::string ratioStr(pipe + 3, newStr.end());
+	long long int ratio;
+	std::istringstream(ratioStr) >> ratio;
+	if (ratio > INT_MAX || ratio < 0)
+		throw std::invalid_argument(FORMAT_ERROR);
 	return;
 }
 
