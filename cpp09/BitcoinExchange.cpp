@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <ctime>
 #include <cctype>
 
 BitcoinExchange::BitcoinExchange(void) {}
@@ -37,7 +38,6 @@ void	BitcoinExchange::loadInput(char *argvStr)
 	std::string		temp;
 
 	file.open(argvStr);
-	//std::getline(file, temp); //Call to pass first line
 	while (std::getline(file, temp))
 	{
 		try{
@@ -52,57 +52,57 @@ void	BitcoinExchange::loadInput(char *argvStr)
 // PRIVATE METHODS
 void	BitcoinExchange::printLineConversion(std::string const line)
 {
-	std::string newStr;
-	std::remove_copy(line.begin(), line.end(), newStr.begin(),  ' ');
-
-	std::string::iterator pipe = find(newStr.begin(), newStr.end(), '|');
 	try{
+		std::string newStr = line;
+		std::string::iterator pipe = newStr.begin() + this->findSeparator(line);
 		this->parseDate(pipe ,newStr);
+		this->parseRatio(pipe, newStr);
+		dateValueToMap(newStr, pipe);
 	}catch(std::exception &e){
-		throw e;
+		throw;
 	}
-
-	try{
-		this->parseRatio(newStr);
-	}catch(std::exception &e){
-		throw e;
-	}
-	dateValueToMap(newStr, pipe);
 	return;
 }
 
-void	BitcoinExchange::parseDate(std::string::iterator pipe, std::string newStr) const
+void	BitcoinExchange::parseDate(std::string::iterator &pipe, std::string &newStr)
 {
 	if (pipe == newStr.end())
-		throw std::invalid_argument(FORMAT_ERROR);
+		throw std::invalid_argument("Error: pipe not founded"); //Creo que lo puedo quitar
 
 	if (*(pipe - 1) == '-' || *newStr.begin() == '-')
-		throw std::invalid_argument(FORMAT_ERROR);
+		throw std::invalid_argument("Error: incorrect slash position");
 
 	int nSlash = std::count(newStr.begin(), pipe, '-');
 	if (nSlash != 2)
-		throw std::invalid_argument(FORMAT_ERROR); //Aquí está entrando todo el rato, no debería
+		throw std::invalid_argument("Error: incorrect number of slashes");
+	
+	if (newStr.find("--") != std::string::npos)
+		throw std::invalid_argument("Error: consecutives slashes");
 
 	std::string::iterator it = newStr.begin();
 	while(it != pipe)
 	{
 		if (*it != '-' && !isdigit(*it))
-			throw std::invalid_argument(FORMAT_ERROR);
+			throw std::invalid_argument("Error: Date incorrect format");
 		it++;
 	}
+	struct tm time = getRealDate(newStr);
+	(void)time;
 	return;
 }
 
-void	BitcoinExchange::parseRatio(std::string newStr) const
+void	BitcoinExchange::parseRatio(std::string::iterator &pipe, std::string &newStr) const
 {
 	bool point = false;
 
-	std::string::iterator it = newStr.begin();
-	if ((it + 1) != newStr.end() && *(it + 1) == '-')
-		it++;
+	std::string::iterator it = pipe + 3;
+	if (it == newStr.end())
+		throw std::invalid_argument(FORMAT_ERROR);
+//	if (*it == '-')
+	//	it++;
 	while (it != newStr.end())
 	{
-		if (!isdigit(*it))
+		if (!isdigit(*it) && *it != '.')
 			throw std::invalid_argument(FORMAT_ERROR);
 		if (*it == '.' && point == true)
 			throw std::invalid_argument(FORMAT_ERROR);
@@ -126,13 +126,123 @@ void	BitcoinExchange::storeData(std::string line){
 	return;
 }
 
-void	BitcoinExchange::dateValueToMap(std::string newStr, std::string::iterator pipe)
+void	BitcoinExchange::dateValueToMap(std::string &newStr, std::string::iterator &pipe)
 {
 	std::string date(newStr.begin(), pipe);
-	std::string ratio(pipe + 1, newStr.end());
+	std::string ratio(pipe + 3, newStr.end());
 	float ratioFloat;
 	std::istringstream(ratio) >> ratioFloat;
 	inputData.insert(std::pair<std::string, float>(date, ratioFloat));
 	std::cout << date << " | " << ratio << std::endl;
 	return;
+}
+
+size_t BitcoinExchange::findSeparator(std::string const &line)
+{
+	std::string newStr;
+	size_t		pipeFoundedPos;
+
+	newStr = line;
+	pipeFoundedPos = newStr.find(" | ");
+	if (pipeFoundedPos == std::string::npos)
+		throw std::invalid_argument("Error: Separator not found");
+	return (pipeFoundedPos);
+}
+
+struct tm BitcoinExchange::getRealDate(std::string &newStr)
+{
+	try{
+		std::string::iterator it = std::find(newStr.begin(), newStr.end(), ' ');
+
+		std::string date(newStr.begin(), it);
+		struct tm time;
+
+		time.tm_year = getYear(date);
+		time.tm_mon = getMonth(date);
+		time.tm_mday = getDay(date, time.tm_year, time.tm_mon);
+		return time;
+	} catch (std::exception &e){
+		throw;
+	}
+}
+
+int	BitcoinExchange::getYear(std::string &date)
+{
+	std::string::iterator dash = std::find(date.begin(), date.end(), '-');
+	std::string yearStr(date.begin(), dash);
+	int year;
+
+	if (yearStr.length() > 4)
+		throw std::out_of_range("Error: incorrect year date");
+
+	std::istringstream(yearStr) >> year;
+	if (year < 2009)
+		throw std::out_of_range("Error: incorrect year date");
+	
+	std::time_t t = time(NULL);
+	struct tm *now = std::localtime(&t);
+	if (year > now->tm_year + 1900)
+		throw std::out_of_range("Error: incorrect year date");
+	return (year);
+}
+
+int BitcoinExchange::getMonth(std::string &date)
+{
+	std::string::iterator firstDash = std::find(date.begin(), date.end(), '-');
+	std::string::iterator secondDash = std::find(firstDash + 1, date.end(), '-');
+	std::string monthStr(firstDash + 1, secondDash);
+
+	if (monthStr.length() > 2)
+		throw std::out_of_range("Error: incorrect month date");
+
+	int month;
+	std::istringstream(monthStr) >> month;
+	
+	if (month < 1 || month > 12)
+		throw std::out_of_range("Error: incorrect month date");
+	
+	return (month);
+}
+
+int	BitcoinExchange::getDay(std::string &date, int year, int month)
+{
+	std::string::iterator firstDash = std::find(date.begin(), date.end(), '-');
+	std::string::iterator secondDash = std::find(firstDash + 1, date.end(), '-');
+	std::string::iterator separator = std::find(secondDash + 1, date.end(), ' ');
+
+	std::string dayStr(secondDash + 1, separator);
+
+	if (dayStr.length() > 2)
+		throw std::out_of_range("Error: incorrect month date");
+	
+	int day;
+	std::istringstream(dayStr) >> day;
+
+	int thirtyDays[4] = {4, 6, 9, 11};
+	int thirtyOneDays[7] = {1, 3, 5, 7, 8, 10, 11};
+
+	if (std::find(thirtyDays, thirtyDays + 4, month) != thirtyDays + 4)
+	{
+		if (day > 30)
+			throw std::out_of_range("Error: day does not exist");
+	}
+
+	if (std::find(thirtyOneDays, thirtyOneDays + 7, month) != thirtyOneDays + 7)
+	{
+		if (day > 31)
+			throw std::out_of_range("Error: day does not exist");
+	}
+
+	if (month == 2)
+	{
+		if (day > (28 + this->isLeapYear(year)))
+			throw std::out_of_range("Error: day does not exist");
+	}
+
+	return (day);
+}
+
+bool	BitcoinExchange::isLeapYear(int year)
+{
+	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }

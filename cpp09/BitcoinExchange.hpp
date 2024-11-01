@@ -20,10 +20,17 @@ class BitcoinExchange {
 		std::map<std::string, float> dataBase;
 		std::map<std::string, float> inputData;
 
-		void		storeData(std::string line);
-		void		parseDate(std::string::iterator pipe, std::string newStr) const;
-		void		parseRatio(std::string newStr) const;
-		void		printLineConversion(std::string const line);
-		void		dateValueToMap(std::string newStr, std::string::iterator pipe);
+		size_t			findSeparator(std::string const &line);
+		void			storeData(std::string line);
+		void			parseDate(std::string::iterator &pipe, std::string &newStr);
+		void			parseRatio(std::string::iterator &pipe, std::string &newStr) const;
+		void			printLineConversion(std::string const line);
+		void			dateValueToMap(std::string &newStr, std::string::iterator &pipe);
+		struct tm		getRealDate(std::string &newStr);
+
+		int			getYear(std::string &date);
+		int			getMonth(std::string &date);
+		int			getDay(std::string &date, int year, int month);
+		bool		isLeapYear(int year);
 };
 #endif
