@@ -18,5 +18,6 @@ class RPN {
 		void				parseToken(std::string token);
 		void				calculateNewValue(std::string token);
 		void				addTokenToStack(std::string token);
+		bool				isOverflow(long long int a, long long int b, std::string token);
 };
 #endif

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <cctype>
+#include <climits>
 
 RPN::RPN(void) {}
 RPN::~RPN(void) {}
@@ -22,6 +23,8 @@ void	RPN::calculateExpression(std::string argvStr)
 	std::stringstream split(argvStr);
 	std::string token;
 
+	std::cout << LLONG_MAX << std::endl;
+	std::cout << LLONG_MIN << std::endl;
 	try{
 		while (split >> token)
 		{
@@ -78,6 +81,9 @@ void	RPN::calculateNewValue(std::string token)
 	if (rpnStack.empty())
 		throw std::logic_error("Error");
 	b = rpnStack.top();
+	rpnStack.pop();
+	if (isOverflow(a, b, token))
+		throw std::logic_error("Error");
 	switch(*token.begin()){
 		case '+':
 		{
@@ -96,9 +102,51 @@ void	RPN::calculateNewValue(std::string token)
 		}
 		case '/':
 		{
+			if (a == 0)
+				throw std::logic_error("Error");
 			rpnStack.push(b / a);
 			return;
 		}
 	}
 	return;
+}
+
+bool RPN::isOverflow(long long int a, long long int b, std::string token)
+{
+	switch (*token.begin())
+	{
+		case '+': 
+		{
+			if ((b > 0 && a > LLONG_MAX - b) || (b < 0 && a < LLONG_MIN - b))
+				return true;
+			break;
+		}
+		case '-': 
+		{
+			if ((b < 0 && a > LLONG_MAX + b) || (b > 0 && a < LLONG_MIN + b))
+				return true;
+			break;
+		}
+		case '*': 
+		{
+			if (a > 0)
+			{
+				if ((b > 0 && a > LLONG_MAX / b) || (b < 0 && a > LLONG_MIN / b))
+					return true;
+			}
+			else if (a < 0)
+			{
+				if ((b > 0 && a < LLONG_MIN / b) || (b < 0 && a < LLONG_MAX / b))
+					return true;
+			}
+			break;
+		}
+		case '/': 
+		{
+			if (a == LLONG_MIN && b == -1)
+				return true;
+			break;
+		}
+	}
+	return false;
 }
