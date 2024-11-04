@@ -1,4 +1,5 @@
 #include "BitcoinExchange.hpp"
+#include <map>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -39,26 +40,38 @@ void	BitcoinExchange::loadInput(char *argvStr)
 	std::string		temp;
 
 	file.open(argvStr);
+	std::getline(file, temp);
+	if (temp != "date | value")
+	{
+		std::cerr << "Error: Input file does not include a header" << std::endl;
+		return;
+	}
 	while (std::getline(file, temp))
 	{
 		try{
-			this->printLineConversion(temp);
+			this->lineConversion(temp);
 		}catch(std::exception &e){
-			std::cout << e.what() << std::endl;
+			std::cerr << e.what() << std::endl;
 		}
 	}
 	return;
 }
 
 // PRIVATE METHODS
-void	BitcoinExchange::printLineConversion(std::string const line)
+void	BitcoinExchange::lineConversion(std::string const line)
 {
+	std::string newStr = line;
+	std::string::iterator pipe;
 	try{
-		std::string newStr = line;
-		std::string::iterator pipe = newStr.begin() + this->findSeparator(line);
+		pipe = newStr.begin() + this->findSeparator(line);
+	}catch(std::exception &e){
+		pipe = newStr.end();
+	}
+	try{
 		this->parseDate(pipe ,newStr);
+		pipe = newStr.begin() + this->findSeparator(line);
 		this->parseRatio(pipe, newStr);
-		dateValueToMap(newStr, pipe);
+		printConversion(newStr, pipe);
 	}catch(std::exception &e){
 		throw;
 	}
@@ -67,24 +80,23 @@ void	BitcoinExchange::printLineConversion(std::string const line)
 
 void	BitcoinExchange::parseDate(std::string::iterator &pipe, std::string &newStr)
 {
-	if (pipe == newStr.end())
-		throw std::invalid_argument("Error: pipe not founded"); //Creo que lo puedo quitar
+	std::string dateStr(newStr.begin(), pipe);
 
 	if (*(pipe - 1) == '-' || *newStr.begin() == '-')
-		throw std::invalid_argument("Error: incorrect slash position");
+		throw std::invalid_argument(BAD_INPUT + dateStr);
 
 	int nSlash = std::count(newStr.begin(), pipe, '-');
 	if (nSlash != 2)
-		throw std::invalid_argument("Error: incorrect number of slashes");
+		throw std::invalid_argument(BAD_INPUT + dateStr);
 	
 	if (newStr.find("--") != std::string::npos)
-		throw std::invalid_argument("Error: consecutives slashes");
+		throw std::invalid_argument(BAD_INPUT + dateStr);
 
 	std::string::iterator it = newStr.begin();
 	while(it != pipe)
 	{
 		if (*it != '-' && !isdigit(*it))
-			throw std::invalid_argument("Error: Date incorrect format");
+			throw std::invalid_argument(BAD_INPUT + dateStr);
 		it++;
 	}
 	getRealDate(newStr);
@@ -97,13 +109,15 @@ void	BitcoinExchange::parseRatio(std::string::iterator &pipe, std::string &newSt
 
 	std::string::iterator it = pipe + 3;
 	if (it == newStr.end())
-		throw std::invalid_argument(FORMAT_ERROR);
+		throw std::invalid_argument("Error: invalid ratio");
+	if (*it == '-')
+		it++;
 	while (it != newStr.end())
 	{
 		if (!isdigit(*it) && *it != '.')
-			throw std::invalid_argument(FORMAT_ERROR);
+			throw std::invalid_argument("Error: invalid ratio");
 		if (*it == '.' && point == true)
-			throw std::invalid_argument(FORMAT_ERROR);
+			throw std::invalid_argument("Error: invalid ratio");
 		if (*it == '.')
 			point = true;
 		it++;
@@ -111,8 +125,10 @@ void	BitcoinExchange::parseRatio(std::string::iterator &pipe, std::string &newSt
 	std::string ratioStr(pipe + 3, newStr.end());
 	long long int ratio;
 	std::istringstream(ratioStr) >> ratio;
-	if (ratio > INT_MAX || ratio < 0)
-		throw std::invalid_argument(FORMAT_ERROR);
+	if (ratio > INT_MAX)
+		throw std::invalid_argument("Error: too large a number");
+	if (ratio < 0)
+		throw std::invalid_argument("Error: not a positive number");
 	return;
 }
 
@@ -129,14 +145,39 @@ void	BitcoinExchange::storeData(std::string line){
 	return;
 }
 
-void	BitcoinExchange::dateValueToMap(std::string &newStr, std::string::iterator &pipe)
+void	BitcoinExchange::printConversion(std::string &newStr, std::string::iterator &pipe)
 {
 	std::string date(newStr.begin(), pipe);
 	std::string ratio(pipe + 3, newStr.end());
 	float ratioFloat;
 	std::istringstream(ratio) >> ratioFloat;
-	inputData.insert(std::pair<std::string, float>(date, ratioFloat));
-	std::cout << date << " | " << ratio << std::endl;
+
+	float conversion;
+	std::map<std::string, float>::iterator it = this->dataBase.begin();
+
+	while(it != this->dataBase.end())
+	{
+		if (date == it->first)
+		{
+			conversion = it->second * ratioFloat;
+			std::cout << date << " => " << ratioFloat <<  " = " << conversion << std::endl;
+			return;
+		}
+		else if (it->first > date && it != dataBase.begin())
+		{
+			it--;
+			conversion = it->second * ratioFloat;
+			std::cout << date << " => " << ratioFloat <<  " = " << conversion << std::endl;
+			return;
+		}
+		else if (it->first > date && it == dataBase.begin())
+		{
+			conversion = dataBase.begin()->second * ratioFloat;
+			std::cout << date << " => " << ratioFloat <<  " = " << conversion << std::endl;
+			return;
+		}
+		it++;
+	}
 	return;
 }
 
@@ -176,16 +217,16 @@ int	BitcoinExchange::getYear(std::string &date)
 	int year;
 
 	if (yearStr.length() > 4)
-		throw std::out_of_range("Error: incorrect year date");
+		throw std::out_of_range(BAD_INPUT + date);
 
 	std::istringstream(yearStr) >> year;
 	if (year < 2009)
-		throw std::out_of_range("Error: incorrect year date");
+		throw std::out_of_range(BAD_INPUT + date);
 	
 	std::time_t t = time(NULL);
 	struct tm *now = std::localtime(&t);
 	if (year > now->tm_year + 1900)
-		throw std::out_of_range("Error: incorrect year date");
+		throw std::out_of_range(BAD_INPUT + date);
 	return (year);
 }
 
@@ -196,13 +237,13 @@ int BitcoinExchange::getMonth(std::string &date)
 	std::string monthStr(firstDash + 1, secondDash);
 
 	if (monthStr.length() > 2)
-		throw std::out_of_range("Error: incorrect month date");
+		throw std::out_of_range(BAD_INPUT + date);
 
 	int month;
 	std::istringstream(monthStr) >> month;
 	
 	if (month < 1 || month > 12)
-		throw std::out_of_range("Error: incorrect month date");
+		throw std::out_of_range(BAD_INPUT + date);
 	
 	return (month);
 }
@@ -216,7 +257,7 @@ int	BitcoinExchange::getDay(std::string &date, int year, int month)
 	std::string dayStr(secondDash + 1, separator);
 
 	if (dayStr.length() > 2)
-		throw std::out_of_range("Error: incorrect month date");
+		throw std::out_of_range(BAD_INPUT + date);
 	
 	int day;
 	std::istringstream(dayStr) >> day;
@@ -227,19 +268,19 @@ int	BitcoinExchange::getDay(std::string &date, int year, int month)
 	if (std::find(thirtyDays, thirtyDays + 4, month) != thirtyDays + 4)
 	{
 		if (day > 30)
-			throw std::out_of_range("Error: day does not exist");
+			throw std::out_of_range(BAD_INPUT + date);
 	}
 
 	if (std::find(thirtyOneDays, thirtyOneDays + 7, month) != thirtyOneDays + 7)
 	{
 		if (day > 31)
-			throw std::out_of_range("Error: day does not exist");
+			throw std::out_of_range(BAD_INPUT + date);
 	}
 
 	if (month == 2)
 	{
 		if (day > (28 + this->isLeapYear(year)))
-			throw std::out_of_range("Error: day does not exist");
+			throw std::out_of_range(BAD_INPUT + date);
 	}
 
 	return (day);
