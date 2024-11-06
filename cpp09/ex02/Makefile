@@ -1,4 +1,4 @@
-NAME = PMergeMe
+NAME = PmergeMe
 
 CC = c++
 

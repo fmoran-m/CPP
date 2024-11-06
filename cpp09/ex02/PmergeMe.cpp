@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 PmergeMe::PmergeMe(void) {}
 PmergeMe::~PmergeMe(void) {}
@@ -24,8 +25,11 @@ void	PmergeMe::parseInput(std::string &argvStr)
 
 	while(split >> token)
 	{
-		if (token.size() != 1 || !isdigit(*token.begin()))
-			throw std::logic_error("Incorrect argument format");
+		for (std::string::iterator it = token.begin(); it != token.end(); it++)
+		{
+			if (!isdigit(*it))
+				throw std::logic_error("Incorrect argument format");
+		}
 		std::istringstream(token) >> temp;
 		numbersVector.push_back(temp);
 	}

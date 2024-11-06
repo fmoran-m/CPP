@@ -22,10 +22,11 @@ int main(int argc, char **argv)
         argvStr += argv[i];
         argvStr += ' ';
     }
-     PmergeMe a;
-     try{
-        a.parseInput(argvStr);
-     }catch (std::exception &e){
-        std::cout << "Error: " << e.what() << std::endl;
-     }
+
+    PmergeMe a;
+    try{
+       a.parseInput(argvStr);
+    }catch (std::exception &e){
+       std::cout << "Error: " << e.what() << std::endl;
+    }
 }
