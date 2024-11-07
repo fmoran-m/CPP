@@ -13,9 +13,14 @@ class PmergeMe {
 		~PmergeMe(void);
 
 		void parseInput(std::string &argvStr);
+		void applyAlgorithm(void);
 	
 	private:
-		std::vector<int>	numbersVector;
-		std::list<int>		numbersList;
+		std::vector<unsigned int>	numbersVector;
+		std::list<unsigned int>		numbersList;
+
+		std::vector<std::pair<unsigned int, unsigned int>> pairNumbers(bool lastElementExists);
+		std::vector<std::pair<unsigned int, unsigned int>> sortPairs(std::vector<std::pair<unsigned int, unsigned int>> pairVector);
+		std::vector<std::pair<unsigned int, unsigned int>> sortLargerNumbers(std::vector<std::pair<unsigned int, unsigned int>> pairVector);
 };
 #endif
