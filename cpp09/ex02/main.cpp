@@ -29,4 +29,6 @@ int main(int argc, char **argv)
 	}catch (std::exception &e){
 		std::cout << "Error: " << e.what() << std::endl;
 	}
+	a.applyAlgorithm();
+	return 0;
 }

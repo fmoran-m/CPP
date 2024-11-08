@@ -19,8 +19,10 @@ class PmergeMe {
 		std::vector<unsigned int>	numbersVector;
 		std::list<unsigned int>		numbersList;
 
-		std::vector<std::pair<unsigned int, unsigned int>> pairNumbers(bool lastElementExists);
-		std::vector<std::pair<unsigned int, unsigned int>> sortPairs(std::vector<std::pair<unsigned int, unsigned int>> pairVector);
-		std::vector<std::pair<unsigned int, unsigned int>> sortLargerNumbers(std::vector<std::pair<unsigned int, unsigned int>> pairVector);
+		std::vector<std::pair<unsigned int, unsigned int> > pairNumbers(bool lastElementExists);
+		void sortPairs(std::vector<std::pair<unsigned int, unsigned int> > &pairVector);
+		void sortLargerNumbers(std::vector<std::pair<unsigned int, unsigned int> > &pairVector);
+		void mergeSort(std::vector<std::pair<unsigned int, unsigned int> > &pairVector, size_t begin, size_t end);
+		void merge(std::vector<std::pair<unsigned int, unsigned int> > &pairVector, size_t begin, size_t mid, size_t end);
 };
 #endif

@@ -40,36 +40,36 @@ void	PmergeMe::parseInput(std::string &argvStr)
 }
 
 void	PmergeMe::applyAlgorithm(void){
-	unsigned int	lastElement;
+
 	bool			lastElementExists = false;
 
 	if (numbersVector.size() % 2 != 0)
-	{
-		lastElement = *(numbersVector.end() - 1);
 		lastElementExists = true;
-	}
 
-	std::vector<std::pair<unsigned int, unsigned int>> pairVector = this->pairNumbers(lastElementExists);
-	pairVector = sortPairs(pairVector);
-	pairVector = sortLargerNumbers(pairVector);
-
+	std::vector<std::pair<unsigned int, unsigned int> > pairVector = this->pairNumbers(lastElementExists);
+	this->sortPairs(pairVector);
+	for (size_t i = 0; i < pairVector.size(); i++)
+		std::cout << pairVector[i].first << std::endl;
+	this->sortLargerNumbers(pairVector);
+	for (size_t i = 0; i < pairVector.size(); i++)
+		std::cout << pairVector[i].first << std::endl;
 	return;
 }
 
 //PRIVATE METHODS
 
-std::vector<std::pair<unsigned int, unsigned int>> PmergeMe::pairNumbers(bool lastElementExists){
+std::vector<std::pair<unsigned int, unsigned int> > PmergeMe::pairNumbers(bool lastElementExists){
 
-	std::vector<std::pair<unsigned int, unsigned int>> pairVector;
+	std::vector<std::pair<unsigned int, unsigned int> > pairVector;
 	std::vector<unsigned int>::iterator it = numbersVector.begin();
-	std::vector<std::pair<unsigned int, unsigned int>>::iterator itPair = pairVector.begin();
+	std::vector<std::pair<unsigned int, unsigned int> >::iterator itPair = pairVector.begin();
 	int i = 1;
 	while (it != numbersVector.end() - lastElementExists)
 	{
 		if (i == 3)
 		{
 			i = 1;
-			++itPair;
+			itPair++;
 		}
 		if (i == 1)
 		{
@@ -85,11 +85,11 @@ std::vector<std::pair<unsigned int, unsigned int>> PmergeMe::pairNumbers(bool la
 	return (pairVector);
 }
 
-std::vector<std::pair<unsigned int, unsigned int>> PmergeMe::sortPairs(std::vector<std::pair<unsigned int, unsigned int>> pairVector)
+void PmergeMe::sortPairs(std::vector<std::pair<unsigned int, unsigned int> > &pairVector)
 {
 	unsigned int temp = 0;
 
-	std::vector<std::pair<unsigned int, unsigned int>>::iterator it = pairVector.begin();
+	std::vector<std::pair<unsigned int, unsigned int> >::iterator it = pairVector.begin();
 	while (it != pairVector.end())
 	{
 		if (it->second > it->first)
@@ -100,10 +100,49 @@ std::vector<std::pair<unsigned int, unsigned int>> PmergeMe::sortPairs(std::vect
 		}
 		it++;
 	}
-	return (pairVector);
 }
 
-std::vector<std::pair<unsigned int, unsigned int>> PmergeMe::sortLargerNumbers(std::vector<std::pair<unsigned int, unsigned int>> pairVector)
+void PmergeMe::sortLargerNumbers(std::vector<std::pair<unsigned int, unsigned int> > &pairVector)
 {
-return ()
+	size_t size = pairVector.size();
+	mergeSort(pairVector, 0, size - 1);
+	return;
+}
+
+void PmergeMe::mergeSort(std::vector<std::pair<unsigned int, unsigned int> > &pairVector, size_t begin, size_t end)
+{
+	if (pairVector.size() == 1)
+		return;
+	size_t mid = begin + (end - begin) / 2;
+	mergeSort(pairVector, begin, mid);
+	mergeSort(pairVector, mid + 1, end);
+	merge(pairVector, begin, mid, end);
+}
+
+void PmergeMe::merge(std::vector<std::pair<unsigned int, unsigned int> > &pairVector, size_t begin, size_t mid, size_t end)
+{
+	std::vector<std::pair<unsigned int, unsigned int> > leftVector(pairVector.begin() + begin, pairVector.begin() + mid);
+	std::vector<std::pair<unsigned int, unsigned int> > rightVector(pairVector.begin() + mid, pairVector.begin() + end); //A lo mejor hace falta sumar 1
+
+	size_t lSize = mid - begin + 1;
+	size_t rSize = end - mid;
+
+	size_t l = 0;
+	size_t r = 0;
+	std::vector<std::pair<unsigned int, unsigned int> >::iterator it = pairVector.begin() + begin; 
+
+	while (l < lSize && r < rSize)
+	{
+		if (leftVector[l].first <= rightVector[r].first)
+		{
+			*it = leftVector[l];
+			l++;
+		}
+		else
+		{
+			*it = rightVector[r];
+			r++;
+		}
+		it++;
+	}
 }
