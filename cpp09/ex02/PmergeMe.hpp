@@ -24,5 +24,6 @@ class PmergeMe {
 		void sortLargerNumbers(std::vector<std::pair<unsigned int, unsigned int> > &pairVector);
 		void mergeSort(std::vector<std::pair<unsigned int, unsigned int> > &pairVector, size_t begin, size_t end);
 		void merge(std::vector<std::pair<unsigned int, unsigned int> > &pairVector, size_t begin, size_t mid, size_t end);
+		std::vector<unsigned int> sortVector(std::vector<std::pair<unsigned int, unsigned int> > &pairVector);
 };
 #endif

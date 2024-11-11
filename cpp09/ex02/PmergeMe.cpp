@@ -49,8 +49,6 @@ void	PmergeMe::applyAlgorithm(void){
 	std::vector<std::pair<unsigned int, unsigned int> > pairVector = this->pairNumbers(lastElementExists);
 	this->sortPairs(pairVector);
 	this->sortLargerNumbers(pairVector);
-	for (size_t i = 0; i < pairVector.size(); i++)
-		std::cout << pairVector[i].first << std::endl;
 	return;
 }
 
@@ -105,12 +103,6 @@ void PmergeMe::mergeSort(std::vector<std::pair<unsigned int, unsigned int> > &pa
 		return;
 
 	size_t mid = begin + (end - begin) / 2;
-	/*
-	std::vector<std::pair<unsigned int, unsigned int> > output;
-	std::vector<std::pair<unsigned int, unsigned int> >::iterator beginIt(pairVector.begin() + begin);
-	std::vector<std::pair<unsigned int, unsigned int> >::iterator midIt(pairVector.begin() + mid + 1);
-	std::vector<std::pair<unsigned int, unsigned int> >::iterator endIt(pairVector.begin() + end + 1);
-	*/
 
 	mergeSort(pairVector, begin, mid);
 	mergeSort(pairVector, mid + 1, end);
@@ -154,4 +146,23 @@ void PmergeMe::merge(std::vector<std::pair<unsigned int, unsigned int> > &pairVe
 		it++;
 	}
 	return;
+}
+
+std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned int, unsigned int> > &pairVector)
+{
+	std::vector<unsigned int> sortedVector;
+	std::vector<unsigned int> pend;
+
+// Main Array and pend vector creation
+
+	std::vector<std::pair<unsigned int, unsigned int> >::iterator it = pairVector.begin();
+	while (it != pairVector.end()){
+		sortedVector.push_back(it->first);
+		pend.push_back(it->second);
+		it++;
+	}
+
+// Insert first element of pend at the beginning of the main vector: we know it is smaller that the first element
+
+	sortedVector.insert(sortedVector.begin(), pend[0]);
 }
