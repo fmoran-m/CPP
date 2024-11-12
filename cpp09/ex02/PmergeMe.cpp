@@ -154,7 +154,6 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 	std::vector<unsigned int> pend;
 
 // Main Array and pend vector creation
-
 	std::vector<std::pair<unsigned int, unsigned int> >::iterator it = pairVector.begin();
 	while (it != pairVector.end()){
 		sortedVector.push_back(it->first);
@@ -163,6 +162,55 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 	}
 
 // Insert first element of pend at the beginning of the main vector: we know it is smaller that the first element
-
 	sortedVector.insert(sortedVector.begin(), pend[0]);
+
+	std::vector<unsigned int> jacobsthalSequence = this->generateJacobsthal(pend.size());
+
+	std::vector<unsigned int>::iterator jacobIt = jacobsthalSequence.begin();
+
+	while(jacobIt != jacobsthalSequence.end())
+	{
+		jacobInsertion(jacobIt, jacobsthalSequence, pend, sortedVector);
+		jacobIt++;
+	}
+}
+
+std::vector<unsigned int> PmergeMe::generateJacobsthal(size_t size)
+{
+	unsigned int value = 3;
+	std::vector<unsigned int> jacobsthalSequence;
+	while (value <= size)
+	{
+		jacobsthalSequence.push_back(value);
+		if (jacobsthalSequence.size() == 1){
+			value += 2;
+		}
+		else
+			value += *(jacobsthalSequence.end() - 2) * 2;
+	}
+	return (jacobsthalSequence);
+}
+
+void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::vector<unsigned int> &jacobsthalSequence, std::vector<unsigned int> &pend, std::vector<unsigned int> &sortedVector)
+{
+	unsigned int index = *jacobIt;
+	if (index == 3){
+		while (index > 1)
+		{
+			binarySearch(pend[index], sortedVector);
+			index--;
+		}
+	}
+	else{
+		while(index > *(jacobIt - 1))
+		{
+			binarySearch(pend[index], sortedVector);
+			index--;
+		}
+	}
+}
+
+void PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int index)
+{
+
 }
