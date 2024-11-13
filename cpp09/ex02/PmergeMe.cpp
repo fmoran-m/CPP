@@ -226,6 +226,7 @@ void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::
 unsigned int PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int begin, unsigned int end) {
 
     if (begin >= end) {
+		std::cout << "entra" << std::endl;
         sortedVector.insert(sortedVector.begin() + begin, n);
         return n;
     }
