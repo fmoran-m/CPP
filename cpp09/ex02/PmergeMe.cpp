@@ -22,7 +22,7 @@ void	PmergeMe::parseInput(std::string &argvStr)
 {
 	std::stringstream	split(argvStr);
 	std::string			token;
-	unsigned long long int		temp;
+	unsigned long int		temp;
 
 	while(split >> token)
 	{
@@ -42,13 +42,26 @@ void	PmergeMe::parseInput(std::string &argvStr)
 void	PmergeMe::applyAlgorithm(void){
 
 	bool			lastElementExists = false;
+	unsigned int	lastElement = 0;
 
 	if (numbersVector.size() % 2 != 0)
+	{
 		lastElementExists = true;
+		lastElement = *(numbersVector.end() - 1);
+	}
 
 	std::vector<std::pair<unsigned int, unsigned int> > pairVector = this->pairNumbers(lastElementExists);
 	this->sortPairs(pairVector);
 	this->sortLargerNumbers(pairVector);
+	numbersVector = sortVector(pairVector);
+	std::vector<unsigned int>::iterator it = numbersVector.begin();
+	if (lastElementExists == true)
+		binarySearch(lastElement, numbersVector, 0, numbersVector.size() - 1);
+	while (it != numbersVector.end())
+	{
+		std::cout << *it << std::endl;
+		it++;
+	}
 	return;
 }
 
@@ -167,12 +180,12 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 	std::vector<unsigned int> jacobsthalSequence = this->generateJacobsthal(pend.size());
 
 	std::vector<unsigned int>::iterator jacobIt = jacobsthalSequence.begin();
-
 	while(jacobIt != jacobsthalSequence.end())
 	{
-		jacobInsertion(jacobIt, jacobsthalSequence, pend, sortedVector);
+		jacobInsertion(jacobIt, pend, sortedVector);
 		jacobIt++;
 	}
+	return (sortedVector);
 }
 
 std::vector<unsigned int> PmergeMe::generateJacobsthal(size_t size)
@@ -186,31 +199,46 @@ std::vector<unsigned int> PmergeMe::generateJacobsthal(size_t size)
 			value += 2;
 		}
 		else
-			value += *(jacobsthalSequence.end() - 2) * 2;
+			value = *(jacobsthalSequence.end() - 1) + (*(jacobsthalSequence.end() - 2) * 2);
 	}
 	return (jacobsthalSequence);
 }
 
-void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::vector<unsigned int> &jacobsthalSequence, std::vector<unsigned int> &pend, std::vector<unsigned int> &sortedVector)
+void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::vector<unsigned int> &pend, std::vector<unsigned int> &sortedVector)
 {
 	unsigned int index = *jacobIt;
 	if (index == 3){
 		while (index > 1)
 		{
-			binarySearch(pend[index], sortedVector);
+			binarySearch(pend[index - 1], sortedVector, 0, index - 1);
 			index--;
 		}
 	}
 	else{
 		while(index > *(jacobIt - 1))
 		{
-			binarySearch(pend[index], sortedVector);
+			binarySearch(pend[index - 1], sortedVector, 0, index - 1);
 			index--;
 		}
 	}
 }
 
-void PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int index)
-{
+unsigned int PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int begin, unsigned int end) {
 
+    if (begin >= end) {
+        sortedVector.insert(sortedVector.begin() + begin, n);
+        return n;
+    }
+
+    unsigned int mid = begin + (end - begin) / 2;
+    if (sortedVector[mid] == n) {
+        sortedVector.insert(sortedVector.begin() + mid, n);
+        return n;
+    }
+
+    if (n < sortedVector[mid]) {
+        return binarySearch(n, sortedVector, begin, mid);
+    } else {
+        return binarySearch(n, sortedVector, mid + 1, end);
+    }
 }
