@@ -185,6 +185,13 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 		jacobInsertion(jacobIt, pend, sortedVector);
 		jacobIt++;
 	}
+	unsigned int last = *(jacobsthalSequence.end() - 1);
+	std::vector<unsigned int>::iterator pendIt = pend.begin() + last;
+	while(pendIt != pend.end())
+	{ 
+		binarySearch(*pendIt, sortedVector, 0, sortedVector.size() - 1);
+		pendIt++;
+	}
 	return (sortedVector);
 }
 
@@ -206,28 +213,31 @@ std::vector<unsigned int> PmergeMe::generateJacobsthal(size_t size)
 
 void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::vector<unsigned int> &pend, std::vector<unsigned int> &sortedVector)
 {
-	unsigned int index = *jacobIt;
-	if (index == 3){
-		while (index > 1)
+	unsigned int pendIndex = *jacobIt;
+	unsigned int sortIndex = *jacobIt;
+	if (pendIndex == 3){
+		while (pendIndex > 1)
 		{
-			binarySearch(pend[index - 1], sortedVector, 0, index - 1);
-			index--;
+			binarySearch(pend[pendIndex - 1], sortedVector, 0, sortIndex - 1);
+			pendIndex--;
 		}
 	}
 	else{
-		while(index > *(jacobIt - 1))
+		while(pendIndex > *(jacobIt - 1))
 		{
-			binarySearch(pend[index - 1], sortedVector, 0, index - 1);
-			index--;
+			binarySearch(pend[pendIndex - 1], sortedVector, 0, sortIndex - 1);
+			pendIndex--;
 		}
 	}
 }
 
-unsigned int PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int begin, unsigned int end) {
-
+unsigned int PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int begin, unsigned int end)
+{
     if (begin >= end) {
-		std::cout << "entra" << std::endl;
-        sortedVector.insert(sortedVector.begin() + begin, n);
+		if (n < sortedVector[begin])
+        	sortedVector.insert(sortedVector.begin() + begin, n);
+		else
+        	sortedVector.insert(sortedVector.begin() + begin + 1, n);
         return n;
     }
 
@@ -237,9 +247,8 @@ unsigned int PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &s
         return n;
     }
 
-    if (n < sortedVector[mid]) {
+    if (n < sortedVector[mid]) 
         return binarySearch(n, sortedVector, begin, mid);
-    } else {
+    else 
         return binarySearch(n, sortedVector, mid + 1, end);
-    }
 }
