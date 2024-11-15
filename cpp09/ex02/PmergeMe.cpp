@@ -49,7 +49,6 @@ void	PmergeMe::applyAlgorithm(void){
 		lastElementExists = true;
 		lastElement = *(numbersVector.end() - 1);
 	}
-
 	std::vector<std::pair<unsigned int, unsigned int> > pairVector = this->pairNumbers(lastElementExists);
 	this->sortPairs(pairVector);
 	this->sortLargerNumbers(pairVector);
@@ -186,11 +185,13 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 		jacobIt++;
 	}
 	unsigned int last = *(jacobsthalSequence.end() - 1);
+	unsigned int sortedIndex = (last * 2) - 1;
 	std::vector<unsigned int>::iterator pendIt = pend.begin() + last;
 	while(pendIt != pend.end())
 	{ 
-		binarySearch(*pendIt, sortedVector, 0, sortedVector.size() - 1);
+		binarySearch(*pendIt, sortedVector, 0, sortedIndex);
 		pendIt++;
+		sortedIndex++;
 	}
 	return (sortedVector);
 }
@@ -213,19 +214,19 @@ std::vector<unsigned int> PmergeMe::generateJacobsthal(size_t size)
 
 void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::vector<unsigned int> &pend, std::vector<unsigned int> &sortedVector)
 {
-	unsigned int pendIndex = *jacobIt;
-	unsigned int sortIndex = *jacobIt;
-	if (pendIndex == 3){
-		while (pendIndex > 1)
+	unsigned int pendIndex = *jacobIt - 1;
+	unsigned int sortIndex = (*jacobIt * 2) - 2;
+	if (pendIndex == 2){
+		while (pendIndex > 0)
 		{
-			binarySearch(pend[pendIndex - 1], sortedVector, 0, sortIndex - 1);
+			binarySearch(pend[pendIndex], sortedVector, 0, sortIndex);
 			pendIndex--;
 		}
 	}
 	else{
-		while(pendIndex > *(jacobIt - 1))
+		while(pendIndex + 1 > *(jacobIt - 1))
 		{
-			binarySearch(pend[pendIndex - 1], sortedVector, 0, sortIndex - 1);
+			binarySearch(pend[pendIndex], sortedVector, 0, sortIndex);
 			pendIndex--;
 		}
 	}
