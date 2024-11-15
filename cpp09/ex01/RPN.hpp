@@ -3,6 +3,7 @@
 
 # include <stack>
 # include <string>
+# include <list>
 
 class RPN {
 	public:
@@ -13,7 +14,7 @@ class RPN {
 
 		void	calculateExpression(std::string argvStr);
 	private:
-		std::stack<long long int> rpnStack;
+		std::stack<long long int, std::list<long long int> > rpnStack;
 
 		void				parseToken(std::string token);
 		void				calculateNewValue(std::string token);

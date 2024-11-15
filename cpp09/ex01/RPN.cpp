@@ -23,8 +23,6 @@ void	RPN::calculateExpression(std::string argvStr)
 	std::stringstream split(argvStr);
 	std::string token;
 
-	std::cout << LLONG_MAX << std::endl;
-	std::cout << LLONG_MIN << std::endl;
 	try{
 		while (split >> token)
 		{
