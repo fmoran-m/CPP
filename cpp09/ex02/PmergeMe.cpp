@@ -39,7 +39,7 @@ void	PmergeMe::parseInput(std::string &argvStr)
 	return;
 }
 
-void	PmergeMe::applyAlgorithm(void){
+void	PmergeMe::applyVectorAlgorithm(void){
 
 	bool			lastElementExists = false;
 	unsigned int	lastElement = 0;
@@ -56,11 +56,26 @@ void	PmergeMe::applyAlgorithm(void){
 	std::vector<unsigned int>::iterator it = numbersVector.begin();
 	if (lastElementExists == true)
 		binarySearch(lastElement, numbersVector, 0, numbersVector.size() - 1);
-	while (it != numbersVector.end())
+	return;
+}
+
+void	PmergeMe::applyDequeAlgorithm(void){
+
+	bool			lastElementExists = false;
+	unsigned int	lastElement = 0;
+
+	if (numbersDeque.size() % 2 != 0)
 	{
-		std::cout << *it << std::endl;
-		it++;
+		lastElementExists = true;
+		lastElement = *(numbersDeque.end() - 1);
 	}
+	std::deque<std::pair<unsigned int, unsigned int> > pairDeque = this->pairNumbersDeque(lastElementExists);
+	this->sortPairsDeque(pairDeque);
+	this->sortLargerNumbersDeque(pairDeque);
+	numbersVector = sortDeque(pairDeque);
+	std::deque<unsigned int>::iterator it = numbersDeque.begin();
+	if (lastElementExists == true)
+		binarySearchDeque(lastElement, numbersVector, 0, numbersVector.size() - 1);
 	return;
 }
 

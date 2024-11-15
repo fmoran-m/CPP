@@ -2,7 +2,7 @@
 # define PMERGEME_HPP
 
 # include <vector>
-# include <list>
+# include <deque>
 # include <string>
 
 class PmergeMe {
@@ -13,12 +13,14 @@ class PmergeMe {
 		~PmergeMe(void);
 
 		void parseInput(std::string &argvStr);
-		void applyAlgorithm(void);
+		void applyVectorAlgorithm(void);
+		void applyDequeAlgorithm(void);
 	
 	private:
 		std::vector<unsigned int>	numbersVector;
-		std::list<unsigned int>		numbersList;
+		std::deque<unsigned int>	numbersDeque;
 
+		//Vector algorithm
 		std::vector<std::pair<unsigned int, unsigned int> > pairNumbers(bool lastElementExists);
 		void sortPairs(std::vector<std::pair<unsigned int, unsigned int> > &pairVector);
 		void sortLargerNumbers(std::vector<std::pair<unsigned int, unsigned int> > &pairVector);
@@ -28,5 +30,7 @@ class PmergeMe {
 		std::vector<unsigned int> generateJacobsthal(size_t size);
 		void jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::vector<unsigned int> &pend, std::vector<unsigned int> &sortedVector);
 		unsigned int binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int begin, unsigned int final);
+
+		//Deque Algorithm
 };
 #endif
