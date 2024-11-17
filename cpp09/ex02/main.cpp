@@ -29,6 +29,27 @@ int main(int argc, char **argv)
 	}catch (std::exception &e){
 		std::cout << "Error: " << e.what() << std::endl;
 	}
+
+	std::cout << "Vector: ";
+	for (unsigned int i = 0; i < a.numbersVector.size(); i++)
+		std::cout << a.numbersVector[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << "Deque: ";
+	for (unsigned int i = 0; i < a.numbersDeque.size(); i++)
+		std::cout << a.numbersDeque[i] << " ";
+	std::cout << std::endl;
+
 	a.applyVectorAlgorithm();
+	std::cout << "Vector: ";
+	for (unsigned int i = 0; i < a.numbersVector.size(); i++)
+		std::cout << a.numbersVector[i] << " ";
+	std::cout << std::endl;
+
+	a.applyDequeAlgorithm();
+	std::cout << "Deque: ";
+	for (unsigned int i = 0; i < a.numbersDeque.size(); i++)
+		std::cout << a.numbersDeque[i] << " ";
+	std::cout << std::endl;
 	return 0;
 }

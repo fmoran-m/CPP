@@ -15,10 +15,11 @@ class PmergeMe {
 		void parseInput(std::string &argvStr);
 		void applyVectorAlgorithm(void);
 		void applyDequeAlgorithm(void);
-	
-	private:
+
 		std::vector<unsigned int>	numbersVector;
 		std::deque<unsigned int>	numbersDeque;
+	
+	private:
 
 		//Vector algorithm
 		std::vector<std::pair<unsigned int, unsigned int> > pairNumbers(bool lastElementExists);
@@ -32,5 +33,14 @@ class PmergeMe {
 		unsigned int binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int begin, unsigned int final);
 
 		//Deque Algorithm
+		std::deque<std::pair<unsigned int, unsigned int> > pairNumbersDeque(bool lastElementExists);
+		void sortPairsDeque(std::deque<std::pair<unsigned int, unsigned int> > &pairDeque);
+		void sortLargerNumbersDeque(std::deque<std::pair<unsigned int, unsigned int> > &pairDeque);
+		void mergeSortDeque(std::deque<std::pair<unsigned int, unsigned int> > &pairDeque, size_t begin, size_t end);
+		void mergeDeque(std::deque<std::pair<unsigned int, unsigned int> > &pairDeque, size_t begin, size_t mid, size_t end);
+		std::deque<unsigned int> sortDeque(std::deque<std::pair<unsigned int, unsigned int> > &pairDeque);
+		std::deque<unsigned int> generateJacobsthalDeque(size_t size);
+		void jacobInsertionDeque(std::deque<unsigned int>::iterator jacobIt, std::deque<unsigned int> &pendDeque, std::deque<unsigned int> &sortedDeque);
+		unsigned int binarySearchDeque(unsigned int n, std::deque<unsigned int> &sortedDeque, unsigned int begin, unsigned int final);
 };
 #endif
