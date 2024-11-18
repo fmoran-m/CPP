@@ -15,11 +15,15 @@ class PmergeMe {
 		void parseInput(std::string &argvStr);
 		void applyVectorAlgorithm(void);
 		void applyDequeAlgorithm(void);
+		float getTime(void);
+
+		std::vector<unsigned int>	getNumbersVector(void);
+		std::deque<unsigned int>	getNumbersDeque(void);
+	
+	private:
 
 		std::vector<unsigned int>	numbersVector;
 		std::deque<unsigned int>	numbersDeque;
-	
-	private:
 
 		//Vector algorithm
 		std::vector<std::pair<unsigned int, unsigned int> > pairNumbers(bool lastElementExists);

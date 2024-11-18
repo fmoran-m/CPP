@@ -4,6 +4,8 @@
 #include <sstream>
 #include <algorithm>
 #include <climits>
+#include <ctime>
+#include <cmath>
 
 PmergeMe::PmergeMe(void) {}
 PmergeMe::~PmergeMe(void) {}
@@ -22,7 +24,7 @@ void	PmergeMe::parseInput(std::string &argvStr)
 {
 	std::stringstream	split(argvStr);
 	std::string			token;
-	unsigned long int		temp;
+	unsigned long int	temp;
 
 	while(split >> token)
 	{
@@ -37,6 +39,8 @@ void	PmergeMe::parseInput(std::string &argvStr)
 		numbersVector.push_back(temp);
 		numbersDeque.push_back(temp);
 	}
+	if (numbersVector.empty() || numbersDeque.empty())
+		throw std::logic_error("No elements found");
 	return;
 }
 
@@ -268,7 +272,8 @@ unsigned int PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &s
         return n;
     }
 
-    unsigned int mid = begin + (end - begin) / 2;
+    unsigned int mid = (begin + (end - begin) / 2);
+	std::cout << "n: " << n << " mid: " << mid << std::endl;
     if (sortedVector[mid] == n) {
         sortedVector.insert(sortedVector.begin() + mid, n);
         return n;
@@ -477,4 +482,21 @@ unsigned int PmergeMe::binarySearchDeque(unsigned int n, std::deque<unsigned int
         return binarySearchDeque(n, sortedDeque, begin, mid);
     else 
         return binarySearchDeque(n, sortedDeque, mid + 1, end);
+}
+
+float	PmergeMe::getTime(void)
+{
+	clock_t ts = clock();
+
+	return (ts);
+}
+
+std::vector<unsigned int> PmergeMe::getNumbersVector(void)
+{
+	return (numbersVector);
+}
+
+std::deque<unsigned int> PmergeMe::getNumbersDeque(void)
+{
+	return (numbersDeque);
 }

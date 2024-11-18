@@ -2,7 +2,7 @@
 #include <iostream>
 #include <climits>
 #include <string>
-#include <sys/time.h>
+#include <iomanip>
 
 int main(int argc, char **argv)
 {
@@ -29,36 +29,33 @@ int main(int argc, char **argv)
 		a.parseInput(argvStr);
 	}catch (std::exception &e){
 		std::cout << "Error: " << e.what() << std::endl;
+		return 1;
 	}
 
 	std::cout << "Before: ";
-	for (unsigned int i = 0; i < a.numbersVector.size(); i++)
-		std::cout << a.numbersVector[i] << " ";
+	for (unsigned int i = 0; i < a.getNumbersVector().size(); i++)
+		std::cout << a.getNumbersVector()[i] << " ";
 	std::cout << std::endl;
 
-	struct timeval beforeVectorTime;
-	struct timeval afterVectorTime;
-	gettimeofday(&beforeVectorTime, NULL);
+	float timeBeforeVector = a.getTime();
 	a.applyVectorAlgorithm();
-	gettimeofday(&afterVectorTime, NULL);
+	float timeAfterVector = a.getTime();
 
 	std::cout << "After (Vector): ";
-	for (unsigned int i = 0; i < a.numbersVector.size(); i++)
-		std::cout << a.numbersVector[i] << " ";
+	for (unsigned int i = 0; i < a.getNumbersVector().size(); i++)
+		std::cout << a.getNumbersVector()[i] << " ";
 	std::cout << std::endl;
 
-	struct timeval beforeDequeTime;
-	struct timeval afterDequeTime;
-	gettimeofday(&beforeDequeTime, NULL);
+	float timeBeforeDeque = a.getTime();
 	a.applyDequeAlgorithm();
-	gettimeofday(&afterDequeTime, NULL);
+	float timeAfterDeque = a.getTime();
 
 	std::cout << "After (Deque): ";
-	for (unsigned int i = 0; i < a.numbersDeque.size(); i++)
-		std::cout << a.numbersDeque[i] << " ";
+	for (unsigned int i = 0; i < a.getNumbersDeque().size(); i++)
+		std::cout << a.getNumbersDeque()[i] << " ";
 	std::cout << std::endl;
 
-	std::cout << "Time to process a range of " << a.numbersVector.size() << " elements with std::vector : " << afterVectorTime.tv_sec - beforeVectorTime.tv_usec << std::endl;
-	std::cout << "Time to process a range of " << a.numbersDeque.size() << " elements with std::deque : " << afterDequeTime.tv_sec - beforeDequeTime.tv_usec << std::endl;
+	std::cout << "Time to process a range of " << a.getNumbersVector().size() << " elements with std::vector : " << std::fixed << std::setprecision(2) << ((timeAfterVector - timeBeforeVector) / CLOCKS_PER_SEC) * 1000 << " ms" << std::endl;
+	std::cout << "Time to process a range of " << a.getNumbersDeque().size() << " elements with std::deque : " << std::fixed << std::setprecision(2) << ((timeAfterDeque - timeBeforeDeque) / CLOCKS_PER_SEC) * 1000 << " ms" << std::endl;
 	return 0;
 }
