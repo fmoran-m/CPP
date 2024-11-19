@@ -4,6 +4,26 @@
 #include <string>
 #include <iomanip>
 
+bool isSortedVector(const std::vector<unsigned int> &vec)
+{
+    for (unsigned int i = 1; i < vec.size(); i++)
+    {
+        if (vec[i - 1] > vec[i])
+            return false;
+    }
+    return true;
+}
+
+bool isSortedDeque(const std::deque<unsigned int> &deq)
+{
+    for (unsigned int i = 1; i < deq.size(); i++)
+    {
+        if (deq[i - 1] > deq[i])
+            return false;
+    }
+    return true;
+}
+
 int main(int argc, char **argv)
 {
 	if (argc < 2)
@@ -57,5 +77,19 @@ int main(int argc, char **argv)
 
 	std::cout << "Time to process a range of " << a.getNumbersVector().size() << " elements with std::vector : " << std::fixed << std::setprecision(2) << ((timeAfterVector - timeBeforeVector) / CLOCKS_PER_SEC) * 1000 << " ms" << std::endl;
 	std::cout << "Time to process a range of " << a.getNumbersDeque().size() << " elements with std::deque : " << std::fixed << std::setprecision(2) << ((timeAfterDeque - timeBeforeDeque) / CLOCKS_PER_SEC) * 1000 << " ms" << std::endl;
-	return 0;
+
+	  // Verificar si los contenedores están ordenados
+    if (isSortedVector(a.getNumbersVector()))
+        std::cout << "The vector is sorted." << std::endl;
+    else
+        std::cout << "The vector is NOT sorted." << std::endl;
+
+    if (isSortedDeque(a.getNumbersDeque()))
+        std::cout << "The deque is sorted." << std::endl;
+    else
+	{
+        std::cout << "The deque is NOT sorted." << std::endl;
+	}
+
+	return (0);
 }
