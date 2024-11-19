@@ -212,7 +212,13 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 		jacobInsertion(jacobIt, pend, sortedVector);
 		jacobIt++;
 	}
-	if (!pend.empty() && pend.size() > jacobsthalSequence.back())
+	if (jacobsthalSequence.empty())
+	{
+		unsigned int num = *(pend.begin() + 1);
+		std::vector<unsigned int>::iterator insertIt = std::lower_bound(sortedVector.begin(), sortedVector.begin() + 2 ,num);
+		sortedVector.insert(insertIt, num);
+	}
+	else if (!pend.empty() && pend.size() > jacobsthalSequence.back())
 	{
 		unsigned int lastIndex = pend.size() - 1;
 		std::vector<unsigned int>::iterator itBack = sortedVector.end();
