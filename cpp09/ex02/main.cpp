@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	for (unsigned int i = 0; i < a.getNumbersVector().size(); i++)
 		std::cout << a.getNumbersVector()[i] << " ";
 	std::cout << std::endl;
-/*
+
 	float timeBeforeDeque = a.getTime();
 	a.applyDequeAlgorithm();
 	float timeAfterDeque = a.getTime();
@@ -72,25 +72,24 @@ int main(int argc, char **argv)
 	for (unsigned int i = 0; i < a.getNumbersDeque().size(); i++)
 		std::cout << a.getNumbersDeque()[i] << " ";
 	std::cout << std::endl;
-*/
 
 	std::cout << "Time to process a range of " << a.getNumbersVector().size() << " elements with std::vector : " << std::fixed << std::setprecision(2) << ((timeAfterVector - timeBeforeVector) / CLOCKS_PER_SEC) * 1000 << " ms" << std::endl;
-	//std::cout << "Time to process a range of " << a.getNumbersDeque().size() << " elements with std::deque : " << std::fixed << std::setprecision(2) << ((timeAfterDeque - timeBeforeDeque) / CLOCKS_PER_SEC) * 1000 << " ms" << std::endl;
+	std::cout << "Time to process a range of " << a.getNumbersDeque().size() << " elements with std::deque : " << std::fixed << std::setprecision(2) << ((timeAfterDeque - timeBeforeDeque) / CLOCKS_PER_SEC) * 1000 << " ms" << std::endl;
 
-	  // Verificar si los contenedores están ordenados
+	 // Verificar si los contenedores están ordenados
     if (isSortedVector(a.getNumbersVector()))
         std::cout << "The vector is sorted." << std::endl;
     else
 	{
         std::cout << "The vector is NOT sorted." << std::endl;
 	}
-/*
+
     if (isSortedDeque(a.getNumbersDeque()))
         std::cout << "The deque is sorted." << std::endl;
     else
 	{
         std::cout << "The deque is NOT sorted." << std::endl;
 	}
-*/
+
 	return (0);
 }

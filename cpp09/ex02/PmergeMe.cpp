@@ -215,14 +215,14 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 	if (jacobsthalSequence.empty())
 	{
 		unsigned int num = *(pend.begin() + 1);
-		std::vector<unsigned int>::iterator insertIt = std::lower_bound(sortedVector.begin(), sortedVector.begin() + 2 ,num);
+		std::vector<unsigned int>::iterator insertIt = std::lower_bound(sortedVector.begin(), sortedVector.end() ,num);
 		sortedVector.insert(insertIt, num);
 	}
 	else if (!pend.empty() && pend.size() > jacobsthalSequence.back())
 	{
 		unsigned int lastIndex = pend.size() - 1;
 		std::vector<unsigned int>::iterator itBack = sortedVector.end();
-		while (lastIndex != *(jacobsthalSequence.end() - 1))
+		while (lastIndex != jacobsthalSequence.back() - 1)
 		{
 			std::vector<unsigned int>::iterator insertIt = std::lower_bound(sortedVector.begin(), itBack, pend[lastIndex]);
 			sortedVector.insert(insertIt, pend[lastIndex]);
@@ -256,7 +256,6 @@ void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::
 	if (pendIndex == 3){
 		while (pendIndex > 1)
 		{
-			std::cout << "pendIndex: " << pendIndex << std::endl;
 			std::vector<unsigned int>::iterator itInsert = std::lower_bound(sortedVector.begin(), sortedVector.begin() + sortIndex, pend[pendIndex - 1]);
 			sortedVector.insert(itInsert, pend[pendIndex - 1]);
 			pendIndex--;
@@ -265,7 +264,6 @@ void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::
 	else{
 		while(pendIndex > *(jacobIt - 1))
 		{
-			std::cout << "pendIndex: " << pendIndex << std::endl;
 			std::vector<unsigned int>::iterator itInsert = std::lower_bound(sortedVector.begin(), sortedVector.begin() + sortIndex, pend[pendIndex - 1]);
 			sortedVector.insert(itInsert, pend[pendIndex - 1]);
 			pendIndex--;
@@ -281,14 +279,18 @@ std::deque<std::pair<unsigned int, unsigned int> > PmergeMe::pairNumbersDeque(bo
 
 	if (lastElementExists == false){
 		while(it != numbersDeque.end()){
-			pairDeque.push_back(std::pair<unsigned int, unsigned int>(*it, *(it + 1)));
-			it += 2;
+			std::deque<unsigned int>::iterator advancedIt = it;
+			std::advance(advancedIt, 1);
+			pairDeque.push_back(std::pair<unsigned int, unsigned int>(*it, *advancedIt));
+			std::advance(it, 2);
 		}
 	}
 	else{
 		while(it != numbersDeque.end() - 1){
-			pairDeque.push_back(std::pair<unsigned int, unsigned int>(*it, *(it + 1)));
-			it += 2;
+			std::deque<unsigned int>::iterator advancedIt = it;
+			std::advance(advancedIt, 1);
+			pairDeque.push_back(std::pair<unsigned int, unsigned int>(*it, *advancedIt));
+			std::advance(it, 2);
 		}
 	}
 	return (pairDeque);
@@ -307,7 +309,7 @@ void PmergeMe::sortPairsDeque(std::deque<std::pair<unsigned int, unsigned int> >
 			it->first = it->second;
 			it->second = temp;
 		}
-		it++;
+		std::advance(it, 1);
 	}
 }
 
@@ -332,15 +334,23 @@ void PmergeMe::mergeSortDeque(std::deque<std::pair<unsigned int, unsigned int> >
 
 void PmergeMe::mergeDeque(std::deque<std::pair<unsigned int, unsigned int> > &pairDeque, size_t begin, size_t mid, size_t end)
 {
-	std::deque<std::pair<unsigned int, unsigned int> > leftVector(pairDeque.begin() + begin, pairDeque.begin() + mid + 1);
-	std::deque<std::pair<unsigned int, unsigned int> > rightVector(pairDeque.begin() + mid + 1, pairDeque.begin() + end + 1);
+	std::deque<std::pair<unsigned int, unsigned int> >::iterator itBegin = pairDeque.begin();
+	std::deque<std::pair<unsigned int, unsigned int> >::iterator itMid = pairDeque.begin();
+	std::deque<std::pair<unsigned int, unsigned int> >::iterator itEnd = pairDeque.begin();
+
+	std::advance(itBegin, begin);
+	std::advance(itMid, mid + 1);
+	std::advance(itEnd, end + 1);
+
+	std::deque<std::pair<unsigned int, unsigned int> > leftVector(itBegin, itMid);
+	std::deque<std::pair<unsigned int, unsigned int> > rightVector(itMid, itEnd);
 
 	size_t lSize = mid - begin + 1;
 	size_t rSize = end - mid;
 
 	size_t l = 0;
 	size_t r = 0;
-	std::deque<std::pair<unsigned int, unsigned int> >::iterator it = pairDeque.begin() + begin; 
+	std::deque<std::pair<unsigned int, unsigned int> >::iterator it = itBegin;
 
 	while (l < lSize && r < rSize)
 	{
@@ -378,7 +388,7 @@ std::deque<unsigned int> PmergeMe::sortDeque(std::deque<std::pair<unsigned int, 
 	while (it != pairDeque.end()){
 		sortedDeque.push_back(it->first);
 		pendDeque.push_back(it->second);
-		it++;
+		std::advance(it, 1);
 	}
 
 	sortedDeque.insert(sortedDeque.begin(), pendDeque[0]);
@@ -386,33 +396,32 @@ std::deque<unsigned int> PmergeMe::sortDeque(std::deque<std::pair<unsigned int, 
 		return (sortedDeque);
 
 	std::deque<unsigned int> jacobsthalSequence = this->generateJacobsthalDeque(pendDeque.size());
-	unsigned int last;
-	unsigned int sortedIndex;
 
 	std::deque<unsigned int>::iterator jacobIt = jacobsthalSequence.begin();
 	while(jacobIt != jacobsthalSequence.end())
 	{
 		jacobInsertionDeque(jacobIt, pendDeque, sortedDeque);
-		jacobIt++;
+		std::advance(jacobIt, 1);
 	}
-	if (!jacobsthalSequence.empty())
+	if (jacobsthalSequence.empty())
 	{
-		last = *(jacobsthalSequence.end() - 1);
-		sortedIndex = (last * 2);
+		std::deque<unsigned int>::iterator itBegin = pendDeque.begin();
+		std::advance(itBegin, 1);
+		unsigned int num = *itBegin;
+		std::deque<unsigned int>::iterator insertIt = std::lower_bound(sortedDeque.begin(), sortedDeque.end(), num);
+		sortedDeque.insert(insertIt, num);
 	}
-	else{
-		last = 1;
-		sortedIndex = 1;
-	}
-	std::deque<unsigned int>::iterator pendIt = pendDeque.begin() + last;
-	while(pendIt != pendDeque.end())
-	{ 
-		std::deque<unsigned int>::iterator itEnd = sortedDeque.begin();
-		std::advance(itEnd, sortedIndex);
-		std::deque<unsigned int>::iterator itInsert = std::lower_bound(sortedDeque.begin(), itEnd, *pendIt);
-		sortedDeque.insert(itInsert, *pendIt);
-		pendIt++;
-		sortedIndex++;
+	else if (!pendDeque.empty() && pendDeque.size() > jacobsthalSequence.back())
+	{
+		unsigned int lastIndex = pendDeque.size() - 1;
+		std::deque<unsigned int>::iterator itBack = sortedDeque.end();
+		while (lastIndex != jacobsthalSequence.back() - 1)
+		{
+			std::deque<unsigned int>::iterator insertIt = std::lower_bound(sortedDeque.begin(), itBack, pendDeque[lastIndex]);
+			sortedDeque.insert(insertIt, pendDeque[lastIndex]);
+			lastIndex--;
+			itBack = sortedDeque.end();
+		}
 	}
 	return (sortedDeque);
 }
@@ -436,13 +445,16 @@ std::deque<unsigned int> PmergeMe::generateJacobsthalDeque(size_t size)
 void PmergeMe::jacobInsertionDeque(std::deque<unsigned int>::iterator jacobIt, std::deque<unsigned int> &pendDeque, std::deque<unsigned int> &sortedDeque)
 {
 	unsigned int pendIndex = *jacobIt;
-	unsigned int sortIndex = (*jacobIt * 2) - 1; //Puede que sea -2?
+	unsigned int sortIndex = (*jacobIt * 2) - 2;
 	if (pendIndex == 3){
-		while (pendIndex > 0)
+		while (pendIndex > 1)
 		{
 			std::deque<unsigned int>::iterator itEnd = sortedDeque.begin();
-			std::advance(itEnd, sortIndex);
-			std::deque<unsigned int>::iterator itInsert = std::lower_bound(sortedDeque.begin(), sortedDeque.begin() + sortIndex, pendDeque[pendIndex - 1]);
+			if (sortIndex < sortedDeque.size())
+				std::advance(itEnd, sortIndex);
+			else
+				itEnd = sortedDeque.end();
+			std::deque<unsigned int>::iterator itInsert = std::lower_bound(sortedDeque.begin(), itEnd, pendDeque[pendIndex - 1]);
 			sortedDeque.insert(itInsert, pendDeque[pendIndex - 1]);
 			pendIndex--;
 		}
@@ -451,8 +463,11 @@ void PmergeMe::jacobInsertionDeque(std::deque<unsigned int>::iterator jacobIt, s
 		while(pendIndex > *(jacobIt - 1))
 		{
 			std::deque<unsigned int>::iterator itEnd = sortedDeque.begin();
-			std::advance(itEnd, sortIndex);
-			std::deque<unsigned int>::iterator itInsert = std::lower_bound(sortedDeque.begin(), sortedDeque.begin() + sortIndex, pendDeque[pendIndex - 1]);
+			if (sortIndex < sortedDeque.size())
+				std::advance(itEnd, sortIndex);
+			else
+				itEnd = sortedDeque.end();
+			std::deque<unsigned int>::iterator itInsert = std::lower_bound(sortedDeque.begin(), itEnd, pendDeque[pendIndex - 1]);
 			sortedDeque.insert(itInsert, pendDeque[pendIndex - 1]);
 			pendIndex--;
 		}
