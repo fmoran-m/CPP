@@ -61,7 +61,10 @@ void	PmergeMe::applyVectorAlgorithm(void){
 	this->sortLargerNumbers(pairVector);
 	numbersVector = sortVector(pairVector);
 	if (lastElementExists == true)
-		binarySearch(lastElement, numbersVector, 0, numbersVector.size() - 1);
+	{
+		std::vector<unsigned int>::iterator itInsert = std::lower_bound(numbersVector.begin(), numbersVector.end(), lastElement);
+		numbersVector.insert(itInsert, lastElement);
+	}
 	return;
 }
 
@@ -82,7 +85,10 @@ void	PmergeMe::applyDequeAlgorithm(void){
 	this->sortLargerNumbersDeque(pairDeque);
 	numbersDeque = sortDeque(pairDeque);
 	if (lastElementExists == true)
-		binarySearchDeque(lastElement, numbersDeque, 0, numbersDeque.size() - 1);
+	{
+		std::deque<unsigned int>::iterator itInsert = std::lower_bound(numbersDeque.begin(), numbersDeque.end(), lastElement);
+		numbersDeque.insert(itInsert, lastElement);
+	}
 	return;
 }
 
@@ -199,8 +205,6 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 		return (sortedVector);
 
 	std::vector<unsigned int> jacobsthalSequence = this->generateJacobsthal(pend.size());
-	unsigned int last;
-	unsigned int sortedIndex;
 
 	std::vector<unsigned int>::iterator jacobIt = jacobsthalSequence.begin();
 	while(jacobIt != jacobsthalSequence.end())
@@ -208,20 +212,17 @@ std::vector<unsigned int> PmergeMe::sortVector(std::vector<std::pair<unsigned in
 		jacobInsertion(jacobIt, pend, sortedVector);
 		jacobIt++;
 	}
-	if (!jacobsthalSequence.empty()){
-		last = *(jacobsthalSequence.end() - 1);
-		sortedIndex = (last * 2);
-	}
-	else{
-		last = 1;
-		sortedIndex = 1;
-	}
-	std::vector<unsigned int>::iterator pendIt = pend.begin() + last;
-	while(pendIt != pend.end())
-	{ 
-		binarySearch(*pendIt, sortedVector, 0, sortedIndex);
-		pendIt++;
-		sortedIndex++;
+	if (!pend.empty() && pend.size() > jacobsthalSequence.back())
+	{
+		unsigned int lastIndex = pend.size() - 1;
+		std::vector<unsigned int>::iterator itBack = sortedVector.end();
+		while (lastIndex != *(jacobsthalSequence.end() - 1))
+		{
+			std::vector<unsigned int>::iterator insertIt = std::lower_bound(sortedVector.begin(), itBack, pend[lastIndex]);
+			sortedVector.insert(insertIt, pend[lastIndex]);
+			lastIndex--;
+			itBack = sortedVector.end();
+		}
 	}
 	return (sortedVector);
 }
@@ -244,44 +245,26 @@ std::vector<unsigned int> PmergeMe::generateJacobsthal(size_t size)
 
 void PmergeMe::jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::vector<unsigned int> &pend, std::vector<unsigned int> &sortedVector)
 {
-	unsigned int pendIndex = *jacobIt - 1;
-	unsigned int sortIndex = (*jacobIt * 2) - 2;
-	if (pendIndex == 2){
-		while (pendIndex > 0)
+	unsigned int pendIndex = *jacobIt;
+	unsigned int sortIndex = (*jacobIt * 2) - 2; //Puede que sea -2??
+	if (pendIndex == 3){
+		while (pendIndex > 1)
 		{
-			binarySearch(pend[pendIndex], sortedVector, 0, sortIndex);
+			std::cout << "pendIndex: " << pendIndex << std::endl;
+			std::vector<unsigned int>::iterator itInsert = std::lower_bound(sortedVector.begin(), sortedVector.begin() + sortIndex, pend[pendIndex - 1]);
+			sortedVector.insert(itInsert, pend[pendIndex - 1]);
 			pendIndex--;
 		}
 	}
 	else{
-		while(pendIndex + 1 > *(jacobIt - 1))
+		while(pendIndex > *(jacobIt - 1))
 		{
-			binarySearch(pend[pendIndex], sortedVector, 0, sortIndex);
+			std::cout << "pendIndex: " << pendIndex << std::endl;
+			std::vector<unsigned int>::iterator itInsert = std::lower_bound(sortedVector.begin(), sortedVector.begin() + sortIndex, pend[pendIndex - 1]);
+			sortedVector.insert(itInsert, pend[pendIndex - 1]);
 			pendIndex--;
 		}
 	}
-}
-
-unsigned int PmergeMe::binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int begin, unsigned int end)
-{
-    if (begin >= end) {
-		if (n < sortedVector[begin])
-        	sortedVector.insert(sortedVector.begin() + begin, n);
-		else
-        	sortedVector.insert(sortedVector.begin() + begin + 1, n);
-        return n;
-    }
-
-    unsigned int mid = (begin + (end - begin) / 2);
-    if (sortedVector[mid] == n) {
-        sortedVector.insert(sortedVector.begin() + mid, n);
-        return n;
-    }
-
-    if (n < sortedVector[mid]) 
-        return binarySearch(n, sortedVector, begin, mid);
-    else 
-        return binarySearch(n, sortedVector, mid + 1, end);
 }
 
 //PRIVATE METHODS DEQUE
@@ -418,7 +401,10 @@ std::deque<unsigned int> PmergeMe::sortDeque(std::deque<std::pair<unsigned int, 
 	std::deque<unsigned int>::iterator pendIt = pendDeque.begin() + last;
 	while(pendIt != pendDeque.end())
 	{ 
-		binarySearchDeque(*pendIt, sortedDeque, 0, sortedIndex);
+		std::deque<unsigned int>::iterator itEnd = sortedDeque.begin();
+		std::advance(itEnd, sortedIndex);
+		std::deque<unsigned int>::iterator itInsert = std::lower_bound(sortedDeque.begin(), itEnd, *pendIt);
+		sortedDeque.insert(itInsert, *pendIt);
 		pendIt++;
 		sortedIndex++;
 	}
@@ -443,55 +429,28 @@ std::deque<unsigned int> PmergeMe::generateJacobsthalDeque(size_t size)
 
 void PmergeMe::jacobInsertionDeque(std::deque<unsigned int>::iterator jacobIt, std::deque<unsigned int> &pendDeque, std::deque<unsigned int> &sortedDeque)
 {
-	unsigned int pendIndex = *jacobIt - 1;
-	unsigned int sortIndex = (*jacobIt * 2) - 2;
-	if (pendIndex == 2){
+	unsigned int pendIndex = *jacobIt;
+	unsigned int sortIndex = (*jacobIt * 2) - 1; //Puede que sea -2?
+	if (pendIndex == 3){
 		while (pendIndex > 0)
 		{
-			binarySearchDeque(pendDeque[pendIndex], sortedDeque, 0, sortIndex);
+			std::deque<unsigned int>::iterator itEnd = sortedDeque.begin();
+			std::advance(itEnd, sortIndex);
+			std::deque<unsigned int>::iterator itInsert = std::lower_bound(sortedDeque.begin(), sortedDeque.begin() + sortIndex, pendDeque[pendIndex - 1]);
+			sortedDeque.insert(itInsert, pendDeque[pendIndex - 1]);
 			pendIndex--;
 		}
 	}
 	else{
-		while(pendIndex + 1 > *(jacobIt - 1))
+		while(pendIndex > *(jacobIt - 1))
 		{
-			binarySearchDeque(pendDeque[pendIndex], sortedDeque, 0, sortIndex);
+			std::deque<unsigned int>::iterator itEnd = sortedDeque.begin();
+			std::advance(itEnd, sortIndex);
+			std::deque<unsigned int>::iterator itInsert = std::lower_bound(sortedDeque.begin(), sortedDeque.begin() + sortIndex, pendDeque[pendIndex - 1]);
+			sortedDeque.insert(itInsert, pendDeque[pendIndex - 1]);
 			pendIndex--;
 		}
 	}
-}
-
-unsigned int PmergeMe::binarySearchDeque(unsigned int n, std::deque<unsigned int> &sortedDeque, unsigned int begin, unsigned int end)
-{
-    if (begin >= end) {
-		std::deque<unsigned int>::iterator it = sortedDeque.begin();
-		for (unsigned int i = 0; i < begin; i++){
-			it++;
-		}
-		if (n < sortedDeque[begin])
-        	sortedDeque.insert(it + 1, n);
-		else
-		{
-			it++;
-        	sortedDeque.insert(it, n);
-		}
-        return n;
-    }
-
-    unsigned int mid = (begin + (end - begin) / 2);
-    if (sortedDeque[mid] == n) {
-		std::deque<unsigned int>::iterator it = sortedDeque.begin();
-		for (unsigned int i = 0; i < begin; i++){
-			it++;
-		}
-        sortedDeque.insert(it, n);
-        return n;
-    }
-
-    if (n < sortedDeque[mid]) 
-        return binarySearchDeque(n, sortedDeque, begin, mid);
-    else 
-        return binarySearchDeque(n, sortedDeque, mid + 1, end);
 }
 
 float	PmergeMe::getTime(void)

@@ -34,7 +34,6 @@ class PmergeMe {
 		std::vector<unsigned int> sortVector(std::vector<std::pair<unsigned int, unsigned int> > &pairVector);
 		std::vector<unsigned int> generateJacobsthal(size_t size);
 		void jacobInsertion(std::vector<unsigned int>::iterator jacobIt, std::vector<unsigned int> &pend, std::vector<unsigned int> &sortedVector);
-		unsigned int binarySearch(unsigned int n, std::vector<unsigned int> &sortedVector, unsigned int begin, unsigned int final);
 
 		//Deque Algorithm
 		std::deque<std::pair<unsigned int, unsigned int> > pairNumbersDeque(bool lastElementExists);
@@ -45,6 +44,5 @@ class PmergeMe {
 		std::deque<unsigned int> sortDeque(std::deque<std::pair<unsigned int, unsigned int> > &pairDeque);
 		std::deque<unsigned int> generateJacobsthalDeque(size_t size);
 		void jacobInsertionDeque(std::deque<unsigned int>::iterator jacobIt, std::deque<unsigned int> &pendDeque, std::deque<unsigned int> &sortedDeque);
-		unsigned int binarySearchDeque(unsigned int n, std::deque<unsigned int> &sortedDeque, unsigned int begin, unsigned int final);
 };
 #endif

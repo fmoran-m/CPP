@@ -2,7 +2,7 @@ NAME = PmergeMe
 
 CC = c++
 
-CFLAGS = -fsanitize=address -g3 -pedantic -std=c++98 -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3 -pedantic -std=c++98
 
 RM = rm -f
 
