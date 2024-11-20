@@ -106,12 +106,16 @@ void	BitcoinExchange::parseDate(std::string::iterator &pipe, std::string &newStr
 void	BitcoinExchange::parseRatio(std::string::iterator &pipe, std::string &newStr) const
 {
 	bool point = false;
+	bool negFlag = false;
 
 	std::string::iterator it = pipe + 3;
 	if (it == newStr.end())
 		throw std::invalid_argument("Error: invalid ratio");
 	if (*it == '-')
+	{
 		it++;
+		negFlag = true;
+	}
 	while (it != newStr.end())
 	{
 		if (!isdigit(*it) && *it != '.')
@@ -123,8 +127,14 @@ void	BitcoinExchange::parseRatio(std::string::iterator &pipe, std::string &newSt
 		it++;
 	}
 	std::string ratioStr(pipe + 3, newStr.end());
+
 	long long int ratio;
+
 	std::istringstream(ratioStr) >> ratio;
+	if (ratio == 0 && negFlag == true)
+		throw std::invalid_argument("Error: invalid ratio");
+	if (ratio > 1000)
+		throw std::invalid_argument("Error: too large a number");
 	if (ratio > INT_MAX)
 		throw std::invalid_argument("Error: too large a number");
 	if (ratio < 0)
@@ -141,7 +151,6 @@ void	BitcoinExchange::storeData(std::string line){
 	std::string key(line.begin(), it);
 	std::string valueStr(it + 1, line.end());
 	std::istringstream(valueStr) >> value;
-//	dataBase.insert(std::pair<std::string, float>(key, value));
 	dataBase[key] = value;
 	return;
 }
