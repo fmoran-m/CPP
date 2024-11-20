@@ -11,7 +11,23 @@ int main(int argc, char **argv)
 
 	RPN rpn;
 	std::string argvStr(argv[1]);
-
+	if (argvStr.empty())
+	{
+		std::cerr << "Error: Incorrect argument format" << std::endl;
+		return 1;
+	}
+	std::string::iterator it = argvStr.begin();
+	while(it != argvStr.end())
+	{
+		if (!std::isspace(*it))
+			break;
+		it++;
+	}
+	if (it == argvStr.end())
+	{
+		std::cerr << "Error: Incorrect argument format" << std::endl;
+		return 1; 
+	}
 	rpn.calculateExpression(argvStr);
 
 	return 0;
