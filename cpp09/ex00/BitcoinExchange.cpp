@@ -40,6 +40,11 @@ void	BitcoinExchange::loadInput(char *argvStr)
 	std::string		temp;
 
 	file.open(argvStr);
+	if (!file.is_open())
+	{
+		std::cerr << "Error: file does not exist" << std::endl;
+		return;
+	}
 	std::getline(file, temp);
 	if (temp != "date | value")
 	{
