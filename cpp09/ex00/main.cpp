@@ -1,8 +1,6 @@
 #include "BitcoinExchange.hpp"
 #include <map>
 #include <iostream>
-#include <ctime>
-#include <fstream>
 
 int main(int argc, char **argv)
 {
@@ -30,7 +28,12 @@ int main(int argc, char **argv)
 		return 1; 
 	}
 	BitcoinExchange a;
-	a.loadDatabase();
+	try{
+		a.loadDatabase();
+	} catch(std::exception &e){
+		std::cout << e.what() << std::endl;
+		return 1;
+	}
 	a.loadInput(argv[1]);
 
 	return 0;

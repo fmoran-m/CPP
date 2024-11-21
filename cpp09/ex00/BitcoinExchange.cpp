@@ -5,8 +5,6 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-#include <ctime>
-#include <cctype>
 #include <climits>
 
 BitcoinExchange::BitcoinExchange(void) {}
@@ -28,9 +26,17 @@ void	BitcoinExchange::loadDatabase(void){
 	std::string		temp;
 
 	file.open("data.csv");
+	if (!file.is_open())
+		throw std::logic_error("Error: database does not exist");
 	std::getline(file, temp); //Call to pass first line
-	while (std::getline(file, temp))
-		storeData(temp);
+	if (temp != "date,exchange_rate")
+		throw std::logic_error("Error: corrupted database");
+	try{
+		while (std::getline(file, temp))
+			storeData(temp);
+	} catch(std::exception &e){
+		throw;
+	}
 	return;
 }
 
@@ -152,11 +158,19 @@ void	BitcoinExchange::storeData(std::string line){
 	float value;
 
 	it = std::find(line.begin(), line.end(), ',');
-
-	std::string key(line.begin(), it);
-	std::string valueStr(it + 1, line.end());
-	std::istringstream(valueStr) >> value;
-	dataBase[key] = value;
+	if (it == line.end())
+		throw std::logic_error("Error: Corrupted database");
+	
+	try{
+		std::string key(line.begin(), it);
+		parseDateDatabase(key);
+		std::string valueStr(it + 1, line.end());
+		parseRatioDatabase(valueStr);
+		std::istringstream(valueStr) >> value;
+		dataBase[key] = value;
+	} catch(std::exception &e){
+		throw std::logic_error("Error: Corrupted database");
+	}
 	return;
 }
 
@@ -304,4 +318,58 @@ int	BitcoinExchange::getDay(std::string &date, int year, int month)
 bool	BitcoinExchange::isLeapYear(int year)
 {
 	return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+}
+
+void	BitcoinExchange::parseRatioDatabase(std::string &newStr) const
+{
+	bool point = false;
+
+	std::string::iterator it = newStr.begin();
+	if (it == newStr.end())
+		throw std::invalid_argument("Error: corrupted database");
+	while (it != newStr.end())
+	{
+		if (!isdigit(*it) && *it != '.')
+			throw std::invalid_argument("Error: corrupted database");
+		if (*it == '.' && point == true)
+			throw std::invalid_argument("Error: corrupted database");
+		if (*it == '.')
+			point = true;
+		it++;
+	}
+	long long int ratio;
+
+	std::istringstream(newStr) >> ratio;
+	if (ratio > INT_MAX)
+		throw std::invalid_argument("Error: too large a number");
+	if (ratio < 0)
+		throw std::invalid_argument("Error: not a positive number");
+	return;
+}
+
+void	BitcoinExchange::parseDateDatabase(std::string &dateStr)
+{
+	if (*(dateStr.end() - 1) == '-' || *dateStr.begin() == '-')
+		throw std::invalid_argument(BAD_INPUT + dateStr);
+
+	int nSlash = std::count(dateStr.begin(), dateStr.end(), '-');
+	if (nSlash != 2)
+		throw std::invalid_argument(BAD_INPUT + dateStr);
+	
+	if (dateStr.find("--") != std::string::npos)
+		throw std::invalid_argument(BAD_INPUT + dateStr);
+
+	std::string::iterator it = dateStr.begin();
+	while(it != dateStr.end())
+	{
+		if (*it != '-' && !isdigit(*it))
+			throw std::invalid_argument(BAD_INPUT + dateStr);
+		it++;
+	}
+	try{
+		getRealDate(dateStr);
+	}catch(std::exception &e){
+		throw;
+	}
+	return;
 }

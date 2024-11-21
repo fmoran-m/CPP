@@ -32,5 +32,9 @@ class BitcoinExchange {
 		int				getMonth(std::string &date);
 		int				getDay(std::string &date, int year, int month);
 		bool			isLeapYear(int year);
+
+		void			parseRatioDatabase(std::string &newStr) const;
+		void			parseDateDatabase(std::string &newStr);
+
 };
 #endif
