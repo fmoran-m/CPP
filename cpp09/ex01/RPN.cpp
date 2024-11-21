@@ -80,26 +80,32 @@ void	RPN::calculateNewValue(std::string token)
 		throw std::logic_error("Error");
 	b = rpnStack.top();
 	rpnStack.pop();
-	if (isOverflow(a, b, token))
-		throw std::logic_error("Error");
 	switch(*token.begin()){
 		case '+':
 		{
+			if (b + a > INT_MAX)
+				throw std::overflow_error("Error: overflow");
 			rpnStack.push(b + a);
 			return;
 		}
 		case '-':
 		{
+			if (b - a < INT_MIN)
+				throw std::overflow_error("Error: overflow");
 			rpnStack.push(b - a);
 			return;
 		}
 		case '*':
 		{
+			if (b * a > INT_MAX)
+				throw std::overflow_error("Error: overflow");
 			rpnStack.push(b * a);
 			return;
 		}
 		case '/':
 		{
+			if (b / a > INT_MIN)
+				throw std::overflow_error("Error: overflow");
 			if (a == 0)
 				throw std::logic_error("Error");
 			rpnStack.push(b / a);
@@ -107,44 +113,4 @@ void	RPN::calculateNewValue(std::string token)
 		}
 	}
 	return;
-}
-
-bool RPN::isOverflow(long long int a, long long int b, std::string token)
-{
-	switch (*token.begin())
-	{
-		case '+': 
-		{
-			if ((b > 0 && a > LLONG_MAX - b) || (b < 0 && a < LLONG_MIN - b))
-				return true;
-			break;
-		}
-		case '-': 
-		{
-			if ((b < 0 && a > LLONG_MAX + b) || (b > 0 && a < LLONG_MIN + b))
-				return true;
-			break;
-		}
-		case '*': 
-		{
-			if (a > 0)
-			{
-				if ((b > 0 && a > LLONG_MAX / b) || (b < 0 && a > LLONG_MIN / b))
-					return true;
-			}
-			else if (a < 0)
-			{
-				if ((b > 0 && a < LLONG_MIN / b) || (b < 0 && a < LLONG_MAX / b))
-					return true;
-			}
-			break;
-		}
-		case '/': 
-		{
-			if (a == LLONG_MIN && b == -1)
-				return true;
-			break;
-		}
-	}
-	return false;
 }
