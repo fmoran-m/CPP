@@ -1,11 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fmoran-m <fmoran-m@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/22 13:50:57 by fmoran-m          #+#    #+#             */
+/*   Updated: 2024/11/22 13:51:05 by fmoran-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PmergeMe.hpp"
-#include <iostream>
-#include <string>
 #include <sstream>
-#include <algorithm>
 #include <climits>
-#include <ctime>
-#include <cmath>
 
 PmergeMe::PmergeMe(void) {}
 PmergeMe::~PmergeMe(void) {}
