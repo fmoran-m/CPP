@@ -6,7 +6,7 @@
 /*   By: fmoran-m <fmoran-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:50:04 by fmoran-m          #+#    #+#             */
-/*   Updated: 2024/11/22 13:55:01 by fmoran-m         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:17:22 by fmoran-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ void	RPN::calculateNewValue(std::string token)
 		}
 		case '/':
 		{
-			if (b / a > INT_MIN)
-				throw std::overflow_error("Error: overflow");
 			if (a == 0)
 				throw std::logic_error("Error");
+			if (b / a < INT_MIN)
+				throw std::overflow_error("Error: overflow");
 			rpnStack.push(b / a);
 			return;
 		}
