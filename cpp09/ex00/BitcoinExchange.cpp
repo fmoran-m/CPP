@@ -6,7 +6,7 @@
 /*   By: fmoran-m <fmoran-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 13:49:44 by fmoran-m          #+#    #+#             */
-/*   Updated: 2024/11/22 13:52:12 by fmoran-m         ###   ########.fr       */
+/*   Updated: 2024/11/23 12:38:01 by fmoran-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	BitcoinExchange::loadDatabase(void){
 	file.open("data.csv");
 	if (!file.is_open())
 		throw std::logic_error("Error: database does not exist");
-	std::getline(file, temp); //Call to pass first line
+	std::getline(file, temp);
 	if (temp != "date,exchange_rate")
 		throw std::logic_error("Error: corrupted database");
 	try{
